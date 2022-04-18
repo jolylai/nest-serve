@@ -8,6 +8,7 @@ specifiers:
   '@nestjs/platform-express': ^8.0.0
   '@nestjs/schematics': ^8.0.0
   '@nestjs/testing': ^8.0.0
+  '@prisma/client': ^3.12.0
   '@types/express': ^4.17.13
   '@types/jest': ^27.0.1
   '@types/node': ^16.0.0
@@ -21,6 +22,7 @@ specifiers:
   eslint-plugin-prettier: ^4.0.0
   jest: ^27.2.5
   prettier: ^2.3.2
+  prisma: ^3.12.0
   reflect-metadata: ^0.1.13
   rimraf: ^3.0.2
   rxjs: ^7.2.0
@@ -37,6 +39,7 @@ dependencies:
   '@nestjs/common': 8.4.4_5199533202e21c7185c9d97f881e2827
   '@nestjs/core': 8.4.4_b63c269346792a9d57cfab86d23050d2
   '@nestjs/platform-express': 8.4.4_a78378ec5f3cecc3c353ed91b578f3e6
+  '@prisma/client': registry.npmmirror.com/@prisma/client/3.12.0_prisma@3.12.0
   class-transformer: r2.cnpmjs.org/class-transformer/0.5.1
   class-validator: r2.cnpmjs.org/class-validator/0.13.2
   reflect-metadata: r2.cnpmjs.org/reflect-metadata/0.1.13
@@ -58,6 +61,7 @@ devDependencies:
   eslint-plugin-prettier: r2.cnpmjs.org/eslint-plugin-prettier/4.0.0_1815ac95b7fb26c13c7d48a8eef62d0f
   jest: 27.5.1_ts-node@10.7.0
   prettier: 2.6.2
+  prisma: registry.npmmirror.com/prisma/3.12.0
   source-map-support: r2.cnpmjs.org/source-map-support/0.5.21
   supertest: 6.2.2
   ts-jest: 27.1.4_9985e1834e803358b7be1e6ce5ca0eea
@@ -826,7 +830,7 @@ packages:
     dev: true
 
   /@types/superagent/4.1.15:
-    resolution: {integrity: sha512-iiXaOL2wSbnSY4qg0mFPWJHL9iwyEsoNYwaHF2w58/fsVAQJlj+KUfFAFZu+nzbz+b7dUprJEAc+O9vhHHhQTA==}
+    resolution: {integrity: sha512-iiXaOL2wSbnSY4qg0mFPWJHL9iwyEsoNYwaHF2w58/fsVAQJlj+KUfFAFZu+nzbz+b7dUprJEAc+O9vhHHhQTA==, tarball: '@types/superagent/-/superagent-4.1.15.tgz'}
     deprecated: '[WARNING] Use 4.1.14 instead of 4.1.15, reason: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/58445'
     dependencies:
       '@types/cookiejar': r2.cnpmjs.org/@types/cookiejar/2.1.2
@@ -1121,7 +1125,7 @@ packages:
       normalize-path: r2.cnpmjs.org/normalize-path/3.0.0
       readdirp: r2.cnpmjs.org/readdirp/3.6.0
     optionalDependencies:
-      fsevents: r2.cnpmjs.org/fsevents/2.3.2
+      fsevents: registry.npmmirror.com/fsevents/2.3.2
     dev: true
 
   /cli-table3/0.6.1:
@@ -1130,7 +1134,7 @@ packages:
     dependencies:
       string-width: r2.cnpmjs.org/string-width/4.2.3
     optionalDependencies:
-      colors: r2.cnpmjs.org/colors/1.4.0
+      colors: registry.npmmirror.com/colors/1.4.0
     dev: true
 
   /cookie/0.4.2:
@@ -1605,7 +1609,7 @@ packages:
       micromatch: 4.0.5
       walker: r2.cnpmjs.org/walker/1.0.8
     optionalDependencies:
-      fsevents: r2.cnpmjs.org/fsevents/2.3.2
+      fsevents: registry.npmmirror.com/fsevents/2.3.2
     dev: true
 
   /jest-jasmine2/27.5.1:
@@ -1773,7 +1777,7 @@ packages:
     engines: {node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0}
     dependencies:
       '@types/node': 16.11.27
-      graceful-fs: 4.2.10
+      graceful-fs: registry.npmmirror.com/graceful-fs/4.2.10
     dev: true
 
   /jest-snapshot/27.5.1:
@@ -3372,15 +3376,6 @@ packages:
     name: color-name
     version: 1.1.4
 
-  r2.cnpmjs.org/colors/1.4.0:
-    resolution: {integrity: sha512-a+UqTh4kgZg/SlGvfbzDHpgRu7AAQOmmqRHJnxhRZICKFUT91brVhNNt58CMWU9PsBbv3PDCZUHbVxuDiH2mtA==, registry: http://r.cnpmjs.org/, tarball: https://r2.cnpmjs.org/colors/-/colors-1.4.0.tgz}
-    name: colors
-    version: 1.4.0
-    engines: {node: '>=0.1.90'}
-    requiresBuild: true
-    dev: true
-    optional: true
-
   r2.cnpmjs.org/combined-stream/1.0.8:
     resolution: {integrity: sha512-FQN4MRfuJeHf7cBbBMJFXhKSDq+2kAArBlmRBvcvFE5BB1HZKXtSFASDhdlz9zOYwxh8lDdnvmMOe/+5cdoEdg==, registry: http://r.cnpmjs.org/, tarball: https://r2.cnpmjs.org/combined-stream/-/combined-stream-1.0.8.tgz}
     name: combined-stream
@@ -3768,7 +3763,7 @@ packages:
       esutils: r2.cnpmjs.org/esutils/2.0.3
       optionator: r2.cnpmjs.org/optionator/0.8.3
     optionalDependencies:
-      source-map: r2.cnpmjs.org/source-map/0.6.1
+      source-map: registry.npmmirror.com/source-map/0.6.1
     dev: true
 
   r2.cnpmjs.org/eslint-plugin-prettier/4.0.0_1815ac95b7fb26c13c7d48a8eef62d0f:
@@ -4091,16 +4086,6 @@ packages:
     resolution: {integrity: sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==, registry: http://r.cnpmjs.org/, tarball: https://r2.cnpmjs.org/fs.realpath/-/fs.realpath-1.0.0.tgz}
     name: fs.realpath
     version: 1.0.0
-
-  r2.cnpmjs.org/fsevents/2.3.2:
-    resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==, registry: http://r.cnpmjs.org/, tarball: https://r2.cnpmjs.org/fsevents/-/fsevents-2.3.2.tgz}
-    name: fsevents
-    version: 2.3.2
-    engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
-    os: [darwin]
-    requiresBuild: true
-    dev: true
-    optional: true
 
   r2.cnpmjs.org/function-bind/1.1.1:
     resolution: {integrity: sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A==, registry: http://r.cnpmjs.org/, tarball: https://r2.cnpmjs.org/function-bind/-/function-bind-1.1.1.tgz}
@@ -4706,7 +4691,7 @@ packages:
     dependencies:
       universalify: r2.cnpmjs.org/universalify/2.0.0
     optionalDependencies:
-      graceful-fs: 4.2.10
+      graceful-fs: registry.npmmirror.com/graceful-fs/4.2.10
     dev: true
 
   r2.cnpmjs.org/kleur/3.0.3:
@@ -6312,3 +6297,77 @@ packages:
     version: 3.1.1
     engines: {node: '>=6'}
     dev: true
+
+  registry.npmmirror.com/@prisma/client/3.12.0_prisma@3.12.0:
+    resolution: {integrity: sha512-4NEQjUcWja/NVBvfuDFscWSk1/rXg3+wj+TSkqXCb1tKlx/bsUE00rxsvOvGg7VZ6lw1JFpGkwjwmsOIc4zvQw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@prisma/client/-/client-3.12.0.tgz}
+    id: registry.npmmirror.com/@prisma/client/3.12.0
+    name: '@prisma/client'
+    version: 3.12.0
+    engines: {node: '>=12.6'}
+    requiresBuild: true
+    peerDependencies:
+      prisma: '*'
+    peerDependenciesMeta:
+      prisma:
+        optional: true
+    dependencies:
+      '@prisma/engines-version': registry.npmmirror.com/@prisma/engines-version/3.12.0-37.22b822189f46ef0dc5c5b503368d1bee01213980
+      prisma: registry.npmmirror.com/prisma/3.12.0
+    dev: false
+
+  registry.npmmirror.com/@prisma/engines-version/3.12.0-37.22b822189f46ef0dc5c5b503368d1bee01213980:
+    resolution: {integrity: sha512-o+jo8d7ZEiVpcpNWUDh3fj2uPQpBxl79XE9ih9nkogJbhw6P33274SHnqheedZ7PyvPIK/mvU8MLNYgetgXPYw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@prisma/engines-version/-/engines-version-3.12.0-37.22b822189f46ef0dc5c5b503368d1bee01213980.tgz}
+    name: '@prisma/engines-version'
+    version: 3.12.0-37.22b822189f46ef0dc5c5b503368d1bee01213980
+    dev: false
+
+  registry.npmmirror.com/@prisma/engines/3.12.0-37.22b822189f46ef0dc5c5b503368d1bee01213980:
+    resolution: {integrity: sha512-zULjkN8yhzS7B3yeEz4aIym4E2w1ChrV12i14pht3ePFufvsAvBSoZ+tuXMvfSoNTgBS5E4bolRzLbMmbwkkMQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@prisma/engines/-/engines-3.12.0-37.22b822189f46ef0dc5c5b503368d1bee01213980.tgz}
+    name: '@prisma/engines'
+    version: 3.12.0-37.22b822189f46ef0dc5c5b503368d1bee01213980
+    requiresBuild: true
+    dev: true
+
+  registry.npmmirror.com/colors/1.4.0:
+    resolution: {integrity: sha512-a+UqTh4kgZg/SlGvfbzDHpgRu7AAQOmmqRHJnxhRZICKFUT91brVhNNt58CMWU9PsBbv3PDCZUHbVxuDiH2mtA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/colors/-/colors-1.4.0.tgz}
+    name: colors
+    version: 1.4.0
+    engines: {node: '>=0.1.90'}
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  registry.npmmirror.com/fsevents/2.3.2:
+    resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/fsevents/-/fsevents-2.3.2.tgz}
+    name: fsevents
+    version: 2.3.2
+    engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
+    os: [darwin]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  registry.npmmirror.com/graceful-fs/4.2.10:
+    resolution: {integrity: sha512-9ByhssR2fPVsNZj478qUUbKfmL0+t5BDVyjShtyZZLiK7ZDAArFFfopyOTj0M05wE2tJPisA4iTnnXl2YoPvOA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/graceful-fs/-/graceful-fs-4.2.10.tgz}
+    name: graceful-fs
+    version: 4.2.10
+    dev: true
+
+  registry.npmmirror.com/prisma/3.12.0:
+    resolution: {integrity: sha512-ltCMZAx1i0i9xuPM692Srj8McC665h6E5RqJom999sjtVSccHSD8Z+HSdBN2183h9PJKvC5dapkn78dd0NWMBg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/prisma/-/prisma-3.12.0.tgz}
+    name: prisma
+    version: 3.12.0
+    engines: {node: '>=12.6'}
+    hasBin: true
+    requiresBuild: true
+    dependencies:
+      '@prisma/engines': registry.npmmirror.com/@prisma/engines/3.12.0-37.22b822189f46ef0dc5c5b503368d1bee01213980
+    dev: true
+
+  registry.npmmirror.com/source-map/0.6.1:
+    resolution: {integrity: sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/source-map/-/source-map-0.6.1.tgz}
+    name: source-map
+    version: 0.6.1
+    engines: {node: '>=0.10.0'}
+    dev: true
+    optional: true
