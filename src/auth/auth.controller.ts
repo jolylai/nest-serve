@@ -24,12 +24,12 @@ export class AuthController {
   @Public()
   @Post('register')
   async register(@Body() registerDto: RegisterDto) {
-    const { name, password } = registerDto;
+    const { username, password } = registerDto;
     const salt = await bcrypt.genSalt(10);
     const encryptedPassword = await bcrypt.hash(password, salt);
 
     return this.userService.create({
-      name,
+      name: username,
       password: encryptedPassword,
     });
   }

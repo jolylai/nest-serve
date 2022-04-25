@@ -3,17 +3,17 @@ import { IsNotEmpty, IsString } from 'class-validator';
 export class LoginDto {
   @IsNotEmpty()
   @IsString()
-  mobile: string;
+  username: string;
 
   @IsNotEmpty()
   @IsString()
-  verificationCode: string;
+  password: string;
 }
 
 export class RegisterDto {
   @IsNotEmpty()
   @IsString()
-  name: string;
+  username: string;
 
   @IsNotEmpty()
   @IsString()
