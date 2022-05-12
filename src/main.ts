@@ -7,6 +7,10 @@ async function bootstrap() {
 
   app.enableCors();
 
+  app.setGlobalPrefix('api', {
+    exclude: ['login', 'register'],
+  });
+
   app.useGlobalPipes(
     new ValidationPipe({
       // 接收只在 DTO 中定义的属性

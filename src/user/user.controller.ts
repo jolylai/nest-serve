@@ -13,6 +13,11 @@ export class UserController {
     return this.userService.findById(useId);
   }
 
+  @Get()
+  async list() {
+    return this.userService.findMany({});
+  }
+
   @Post()
   create(@Body() userDto: CreateUserDto) {
     return this.userService.create(userDto);

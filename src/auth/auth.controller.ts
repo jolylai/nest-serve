@@ -16,9 +16,15 @@ export class AuthController {
   @Public()
   @UseGuards(LocalAuthGuard)
   @Post('login')
-  async login(@Request() request) {
+  async login(@Request() request: any) {
     const token = await this.authService.jwtSign(request.user);
-    return { token };
+    return {
+      code: 0,
+      message: '登录成功',
+      data: {
+        token,
+      },
+    };
   }
 
   @Public()

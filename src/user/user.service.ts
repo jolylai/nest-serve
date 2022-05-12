@@ -20,9 +20,13 @@ export class UserService {
     });
   }
 
-  async create(data: Prisma.UserCreateInput) {
+  async create(data: Prisma.userCreateInput) {
     return this.prisma.user.create({
       data,
     });
+  }
+
+  async findMany(args: Prisma.userFindManyArgs) {
+    return this.prisma.user.findMany(args);
   }
 }
