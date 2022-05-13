@@ -1,5 +1,5 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { PaginationDto } from 'src/common/dtos/pagination.dto';
 import { CreateUserDto } from './user.dto';
 import { UserService } from './user.service';
 
@@ -7,15 +7,19 @@ import { UserService } from './user.service';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @UseGuards(JwtAuthGuard)
-  @Get('/:userId')
-  findById(@Param('userId') useId: number) {
-    return this.userService.findById(useId);
+  @Get()
+  async list(@Query() pagination: PaginationDto) {
+    const [list, total] = await this.userService.pagination({
+      take: pagination.pageSize,
+      skip: pagination.skip,
+    });
+
+    return { list, total };
   }
 
-  @Get()
-  async list() {
-    return this.userService.findMany({});
+  @Get('/:userId')
+  async findById(@Param('userId') useId: number) {
+    return this.userService.findById(useId);
   }
 
   @Post()

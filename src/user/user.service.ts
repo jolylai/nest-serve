@@ -27,6 +27,20 @@ export class UserService {
   }
 
   async findMany(args: Prisma.userFindManyArgs) {
-    return this.prisma.user.findMany(args);
+    return this.prisma.user.findMany({
+      ...args,
+      select: { id: true, name: true, created_at: true, updated_at: true },
+    });
+  }
+
+  async pagination(args: Prisma.userFindManyArgs) {
+    return this.prisma.$transaction([
+      this.prisma.user.findMany(args),
+      this.prisma.user.count({ where: args.where }),
+    ]);
+  }
+
+  async count() {
+    return this.prisma.user.count();
   }
 }

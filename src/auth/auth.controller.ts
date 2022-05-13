@@ -1,7 +1,7 @@
 import { Body, Controller, Post, Request, UseGuards } from '@nestjs/common';
 import { UserService } from 'src/user/user.service';
 import { Public } from './auth.decorator';
-import { RegisterDto } from './auth.dto';
+import { LoginDto, RegisterDto } from './auth.dto';
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import * as bcrypt from 'bcrypt';
@@ -16,7 +16,7 @@ export class AuthController {
   @Public()
   @UseGuards(LocalAuthGuard)
   @Post('login')
-  async login(@Request() request: any) {
+  async login(@Body() data: LoginDto, @Request() request: any) {
     const token = await this.authService.jwtSign(request.user);
     return {
       code: 0,
