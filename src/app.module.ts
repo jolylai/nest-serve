@@ -8,9 +8,10 @@ import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './auth/auth.module';
 import { FileService } from './file/file.service';
 import { FileModule } from './file/file.module';
+import { AreaModule } from './area/area.module';
 
 @Module({
-  imports: [NotifyModule, UserModule, PrismaModule, AuthModule, FileModule],
+  imports: [NotifyModule, UserModule, PrismaModule, AuthModule, FileModule, AreaModule],
   controllers: [AppController],
   providers: [AppService, PrismaService, FileService],
 })
