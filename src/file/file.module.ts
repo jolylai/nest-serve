@@ -1,7 +1,27 @@
 import { Module } from '@nestjs/common';
+import { MulterModule } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import path from 'path';
 import { FileController } from './file.controller';
+import { FileService } from './file.service';
 
 @Module({
-  controllers: [FileController]
+  imports: [
+    MulterModule.register({
+      storage: diskStorage({
+        // 配置文件上传后的文件夹路径
+        destination: `./public/uploads`,
+        filename: (req, file, cb) => {
+          const extname = path.extname(file.originalname);
+
+          // 在此处自定义保存后的文件名称
+          const filename = `${1111}.${extname}`;
+          return cb(null, filename);
+        },
+      }),
+    }),
+  ],
+  controllers: [FileController],
+  providers: [FileService],
 })
 export class FileModule {}

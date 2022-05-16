@@ -18,13 +18,7 @@ export class AuthController {
   @Post('login')
   async login(@Body() data: LoginDto, @Request() request: any) {
     const token = await this.authService.jwtSign(request.user);
-    return {
-      code: 0,
-      message: '登录成功',
-      data: {
-        token,
-      },
-    };
+    return { token };
   }
 
   @Public()
