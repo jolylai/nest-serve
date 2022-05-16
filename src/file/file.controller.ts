@@ -6,33 +6,40 @@ import {
   Param,
   ParseIntPipe,
   Post,
+  Query,
+  StreamableFile,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { readFile, writeFile } from 'fs-extra';
+import { createReadStream } from 'fs';
+import { writeFile } from 'fs-extra';
+import { PaginationDto } from 'src/common/dtos/pagination.dto';
 import { read, write, utils } from 'xlsx';
 import { FileService } from './file.service';
 
 @Controller('file')
 export class FileController {
   constructor(private readonly fileService: FileService) {}
+
   @Get()
-  async list() {
-    return {
-      code: 200,
-      status: 200,
-      data: {
-        id: 'id',
-        url: 'https://picsum.photos/200/300',
-      },
-    };
+  async list(@Query() pagination: PaginationDto) {
+    const [list, total] = await this.fileService.pagination({
+      skip: pagination.skip,
+      take: pagination.take,
+    });
+
+    return { list, total };
+  }
+
+  @Get(':id')
+  async getFile(@Param('id', ParseIntPipe) id: number) {
+    return this.fileService.findById(id);
   }
 
   @Post()
   @UseInterceptors(FileInterceptor('file'))
   uploadFile(@UploadedFile() file: Express.Multer.File) {
-    console.log('file: ', file);
     return this.fileService.create({
       name: file.filename,
       url: 'https://picsum.photos/200/300',
@@ -47,9 +54,6 @@ export class FileController {
   @Post('xlsx')
   @UseInterceptors(FileInterceptor('file'))
   uploadXlsxFile(@UploadedFile() file: Express.Multer.File) {
-    console.log('file: ', file);
-    console.log('file: ', file.filename);
-
     const workbook = read(file.buffer, {
       type: 'buffer',
     });
@@ -59,7 +63,7 @@ export class FileController {
 
   @Get('xlsx')
   @Header('Content-Disposition', 'attachment; filename=download.xlsx')
-  async exportXlsx() {
+  async exportXlsxFile() {
     const workBook = utils.book_new();
     const workSheet = utils.aoa_to_sheet([[1, 2, 3]], {
       cellDates: true,
@@ -77,7 +81,8 @@ export class FileController {
 
     // 写入文件
     writeFile('./hello.xlsx', result);
+    const file = createReadStream('package.json');
 
-    return readFile('./hello.xlsx');
+    return new StreamableFile(file);
   }
 }
