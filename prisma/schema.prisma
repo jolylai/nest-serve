@@ -7,10 +7,44 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model area {
+  id        Int    @id @default(autoincrement())
+  pid       Int
+  name      String
+  shortname String
+  longitude String
+  latitude  String
+  level     Int
+  sort      Int
+  status    Int    @default(1) @db.TinyInt
+}
+
 model user {
-  id         Int      @id @default(autoincrement())
+  id         Int            @id @default(autoincrement())
   name       String
   password   String
+  address    user_address[]
+  created_at DateTime       @default(now())
+  updated_at DateTime       @updatedAt
+}
+
+model user_address {
+  id     Int  @id @default(autoincrement())
+  userId Int
+  user   user @relation(fields: [userId], references: [id])
+
+  name   String
+  mobile String
+
+  // provinceId Int
+  // province   area @relation('address_province',fields: [provinceId], references: [id])
+
+  // cityId Int
+  // city   area @relation(fields: [cityId], references: [id])
+
+  // areaId Int
+  // area   area @relation(fields: [areaId], references: [id])
+
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 }
@@ -21,16 +55,4 @@ model file {
   url        String
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
-}
-
-model area {
-  id        Int    @id @default(autoincrement())
-  pid       Int
-  name      String
-  shortname String
-  longitude String
-  latitude  String
-  level     Int
-  sort      Int
-  status    Int    @default(1)
 }
