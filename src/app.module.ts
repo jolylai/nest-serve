@@ -1,4 +1,6 @@
 import { Module } from '@nestjs/common';
+import { BullModule } from '@nestjs/bull';
+
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { NotifyModule } from './notify/notify.module';
@@ -11,7 +13,20 @@ import { FileModule } from './file/file.module';
 import { AreaModule } from './area/area.module';
 
 @Module({
-  imports: [NotifyModule, UserModule, PrismaModule, AuthModule, FileModule, AreaModule],
+  imports: [
+    BullModule.forRoot({
+      redis: {
+        host: 'localhost',
+        port: 6379,
+      },
+    }),
+    NotifyModule,
+    UserModule,
+    PrismaModule,
+    AuthModule,
+    FileModule,
+    AreaModule,
+  ],
   controllers: [AppController],
   providers: [AppService, PrismaService, FileService],
 })

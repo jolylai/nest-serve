@@ -29,27 +29,32 @@ model user {
 }
 
 model user_address {
-  id     Int  @id @default(autoincrement())
-  userId Int
-  user   user @relation(fields: [userId], references: [id])
+  id           Int      @id @default(autoincrement())
+  userId       Int
+  user         user     @relation(fields: [userId], references: [id])
+  name         String
+  mobile       String
+  provinceId   Int
+  cityId       Int
+  areaId       Int
+  address      String
+  full_address String
+  longitude    String
+  latitude     String
+  is_default   Int      @db.TinyInt
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
+}
 
-  name   String
-  mobile String
-
-  // provinceId Int
-  // province   area @relation('address_province',fields: [provinceId], references: [id])
-
-  // cityId Int
-  // city   area @relation(fields: [cityId], references: [id])
-
-  // areaId Int
-  // area   area @relation(fields: [areaId], references: [id])
-
+model file {
+  id         Int      @id @default(autoincrement())
+  name       String
+  url        String
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 }
 
-model file {
+model goods {
   id         Int      @id @default(autoincrement())
   name       String
   url        String

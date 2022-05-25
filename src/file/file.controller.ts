@@ -32,11 +32,6 @@ export class FileController {
     return { list, total };
   }
 
-  @Get(':id')
-  async getFile(@Param('id', ParseIntPipe) id: number) {
-    return this.fileService.findById(id);
-  }
-
   @Post()
   @UseInterceptors(FileInterceptor('file'))
   uploadFile(@UploadedFile() file: Express.Multer.File) {
@@ -51,7 +46,7 @@ export class FileController {
     return this.fileService.delete(id);
   }
 
-  @Post('xlsx')
+  @Post('excel')
   @UseInterceptors(FileInterceptor('file'))
   uploadXlsxFile(@UploadedFile() file: Express.Multer.File) {
     const workbook = read(file.buffer, {
@@ -84,5 +79,10 @@ export class FileController {
     const file = createReadStream('package.json');
 
     return new StreamableFile(file);
+  }
+
+  @Get(':id')
+  async getFile(@Param('id', ParseIntPipe) id: number) {
+    return this.fileService.findById(id);
   }
 }
