@@ -2,21 +2,23 @@ import {
   Controller,
   Delete,
   Get,
-  Header,
   Param,
-  ParseIntPipe,
   Post,
   Query,
+  Response,
   StreamableFile,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { createReadStream } from 'fs';
-import { writeFile } from 'fs-extra';
+import fg from 'fast-glob';
+
 import { PaginationDto } from 'src/common/dtos/pagination.dto';
-import { read, write, utils } from 'xlsx';
+import { read } from 'xlsx';
 import { FileService } from './file.service';
+import { getContentType, getFilePath } from './file.util';
+import { remove } from 'fs-extra';
 
 @Controller('file')
 export class FileController {
@@ -24,26 +26,22 @@ export class FileController {
 
   @Get()
   async list(@Query() pagination: PaginationDto) {
-    const [list, total] = await this.fileService.pagination({
-      skip: pagination.skip,
-      take: pagination.take,
+    const files = await fg(['public/uploads/**'], { stats: true });
+    const list = files.map((file) => {
+      return {
+        name: file.name,
+        size: file.stats.size,
+        createdAt: file.stats.ctime,
+      };
     });
 
-    return { list, total };
+    return { data: list, total: list.length };
   }
 
   @Post()
   @UseInterceptors(FileInterceptor('file'))
   uploadFile(@UploadedFile() file: Express.Multer.File) {
-    return this.fileService.create({
-      name: file.filename,
-      url: 'https://picsum.photos/200/300',
-    });
-  }
-
-  @Delete(':id')
-  deleteFile(@Param('id', ParseIntPipe) id: number) {
-    return this.fileService.delete(id);
+    return { url: file.path, name: file.filename };
   }
 
   @Post('excel')
@@ -56,33 +54,28 @@ export class FileController {
     return workbook;
   }
 
-  @Get('xlsx')
-  @Header('Content-Disposition', 'attachment; filename=download.xlsx')
-  async exportXlsxFile() {
-    const workBook = utils.book_new();
-    const workSheet = utils.aoa_to_sheet([[1, 2, 3]], {
-      cellDates: true,
+  @Get('excel')
+  async exportXlsxFile() {}
+
+  @Get(':filename')
+  async getFile(
+    @Param('filename') filename: string,
+    @Response({ passthrough: true }) res,
+  ) {
+    const file = createReadStream(getFilePath(filename));
+
+    res.set({
+      'Content-Type': getContentType(filename),
+      'Content-Disposition': `attachment; filename="${filename}"`,
     });
-
-    // 向工作簿中追加工作表
-    utils.book_append_sheet(workBook, workSheet, 'helloWorld');
-
-    // 浏览器端和node共有的API,实际上node可以直接使用xlsx.writeFile来写入文件,但是浏览器没有该API
-    const result = write(workBook, {
-      bookType: 'xlsx', // 输出的文件类型
-      type: 'buffer', // 输出的数据类型
-      compression: true, // 开启zip压缩
-    });
-
-    // 写入文件
-    writeFile('./hello.xlsx', result);
-    const file = createReadStream('package.json');
 
     return new StreamableFile(file);
   }
 
-  @Get(':id')
-  async getFile(@Param('id', ParseIntPipe) id: number) {
-    return this.fileService.findById(id);
+  @Delete(':filename')
+  async deleteFile(@Param('filename') filename: string) {
+    await remove(getFilePath(filename));
+
+    return { name: filename };
   }
 }
