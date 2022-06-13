@@ -1,8 +1,18 @@
 version: '3'
 services:
-  redis:
-    image: redis:5-alipine
+  service: 
+    container_name: service
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
     restart: always
-    container_name: redis
+    depends_on:
+      - nestjs-redis
+  redis:
+    container_name: nestjs-redis
+    image: "redis:alpine"
+    restart: always
     ports:
       - 6379:6379
