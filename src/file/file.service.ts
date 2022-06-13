@@ -31,9 +31,9 @@ export class FileService {
     return this.prisma.file.delete({ where: { id } });
   }
 
-  async parseExcel(excel: Buffer) {
+  async parseExcel(filePath: string) {
     const workBook = new Excel.Workbook();
-    await workBook.xlsx.load(excel);
+    await workBook.xlsx.readFile(filePath);
 
     const workSheet = workBook.getWorksheet(1);
 

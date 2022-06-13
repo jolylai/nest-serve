@@ -3,13 +3,16 @@ import {
   NestInterceptor,
   ExecutionContext,
   CallHandler,
+  StreamableFile,
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-export interface Response<T> {
+export interface CommonResponse<T> {
   data: T;
 }
+
+type Response<T> = CommonResponse<T> | StreamableFile;
 
 @Injectable()
 export class TransformInterceptor<T>
@@ -21,6 +24,9 @@ export class TransformInterceptor<T>
   ): Observable<Response<T>> {
     return next.handle().pipe(
       map((data) => {
+        if (data instanceof StreamableFile) {
+          return data;
+        }
         return { code: 0, message: 'success', data };
       }),
     );

@@ -14,6 +14,7 @@ specifiers:
   '@nestjs/testing': ^8.0.0
   '@prisma/client': ^3.12.0
   '@types/bcrypt': ^5.0.0
+  '@types/bull': ^3.15.8
   '@types/cron': ^1.7.3
   '@types/express': ^4.17.13
   '@types/fs-extra': ^9.0.13
@@ -85,6 +86,7 @@ devDependencies:
   '@nestjs/schematics': registry.npmmirror.com/@nestjs/schematics/8.0.11_typescript@4.7.2
   '@nestjs/testing': registry.npmmirror.com/@nestjs/testing/8.4.5_v4yws7ywn2lpbkufzf4c3ewbaq
   '@types/bcrypt': registry.npmmirror.com/@types/bcrypt/5.0.0
+  '@types/bull': registry.npmmirror.com/@types/bull/3.15.8
   '@types/cron': registry.npmmirror.com/@types/cron/1.7.3
   '@types/express': registry.npmmirror.com/@types/express/4.17.13
   '@types/fs-extra': registry.npmmirror.com/@types/fs-extra/9.0.13
@@ -1504,6 +1506,15 @@ packages:
       '@types/connect': registry.npmmirror.com/@types/connect/3.4.35
       '@types/node': registry.npmmirror.com/@types/node/16.11.36
 
+  registry.npmmirror.com/@types/bull/3.15.8:
+    resolution: {integrity: sha512-8DbSPMSsZH5PWPnGEkAZLYgJEH4ghHJNKF7LB6Wr5R0/v6g+Vs+JoaA7kcvLtHE936xg2WpFPkaoaJgExOmKDw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@types/bull/-/bull-3.15.8.tgz}
+    name: '@types/bull'
+    version: 3.15.8
+    dependencies:
+      '@types/ioredis': registry.npmmirror.com/@types/ioredis/4.28.10
+      '@types/redis': registry.npmmirror.com/@types/redis/2.8.32
+    dev: true
+
   registry.npmmirror.com/@types/connect/3.4.35:
     resolution: {integrity: sha512-cdeYyv4KWoEgpBISTxWvqYsVy444DOqehiF3fM3ne10AmJ62RSyNkUnxMJXHQWRQQX2eR94m5y1IZyDwBjV9FQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@types/connect/-/connect-3.4.35.tgz}
     name: '@types/connect'
@@ -1581,6 +1592,14 @@ packages:
     resolution: {integrity: sha512-anKkLmZZ+xm4p8JWBf4hElkM4XR+EZeA2M9BAkkTldmcyDY4mbdIJnRghDJH3Ov5ooY7/UAoENtmdMSkaAd7Cw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@types/graceful-fs/-/graceful-fs-4.1.5.tgz}
     name: '@types/graceful-fs'
     version: 4.1.5
+    dependencies:
+      '@types/node': registry.npmmirror.com/@types/node/16.11.36
+    dev: true
+
+  registry.npmmirror.com/@types/ioredis/4.28.10:
+    resolution: {integrity: sha512-69LyhUgrXdgcNDv7ogs1qXZomnfOEnSmrmMFqKgt1XMJxmoOSG/u3wYy13yACIfKuMJ8IhKgHafDO3sx19zVQQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@types/ioredis/-/ioredis-4.28.10.tgz}
+    name: '@types/ioredis'
+    version: 4.28.10
     dependencies:
       '@types/node': registry.npmmirror.com/@types/node/16.11.36
     dev: true
@@ -1718,6 +1737,14 @@ packages:
     name: '@types/range-parser'
     version: 1.2.4
 
+  registry.npmmirror.com/@types/redis/2.8.32:
+    resolution: {integrity: sha512-7jkMKxcGq9p242exlbsVzuJb57KqHRhNl4dHoQu2Y5v9bCAbtIXXH0R3HleSQW4CTOqpHIYUW3t6tpUj4BVQ+w==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@types/redis/-/redis-2.8.32.tgz}
+    name: '@types/redis'
+    version: 2.8.32
+    dependencies:
+      '@types/node': registry.npmmirror.com/@types/node/16.11.36
+    dev: true
+
   registry.npmmirror.com/@types/serve-static/1.13.10:
     resolution: {integrity: sha512-nCkHGI4w7ZgAdNkrEu0bv+4xNV/XDqW+DydknebMOQwkpDGx8G+HTlj7R7ABI8i8nKxVw0wtKPi1D+lPOkh4YQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@types/serve-static/-/serve-static-1.13.10.tgz}
     name: '@types/serve-static'
@@ -1735,7 +1762,7 @@ packages:
   registry.npmmirror.com/@types/superagent/4.1.15:
     resolution: {integrity: sha512-iiXaOL2wSbnSY4qg0mFPWJHL9iwyEsoNYwaHF2w58/fsVAQJlj+KUfFAFZu+nzbz+b7dUprJEAc+O9vhHHhQTA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@types/superagent/-/superagent-4.1.14.tgz}
     name: '@types/superagent'
-    version: 4.1.14
+    version: 4.1.15
     deprecated: '[WARNING] Use 4.1.14 instead of 4.1.15, reason: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/58445'
     dependencies:
       '@types/cookiejar': registry.npmmirror.com/@types/cookiejar/2.1.2
@@ -2579,7 +2606,7 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: registry.npmmirror.com/caniuse-lite/1.0.30001342
+      caniuse-lite: registry.npmmirror.com/caniuse-lite/1.0.30001343
       electron-to-chromium: registry.npmmirror.com/electron-to-chromium/1.4.139
       escalade: registry.npmmirror.com/escalade/3.1.1
       node-releases: registry.npmmirror.com/node-releases/2.0.5
@@ -2705,10 +2732,10 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  registry.npmmirror.com/caniuse-lite/1.0.30001342:
-    resolution: {integrity: sha512-bn6sOCu7L7jcbBbyNhLg0qzXdJ/PMbybZTH/BA6Roet9wxYRm6Tr9D0s0uhLkOZ6MSG+QU6txUgdpr3MXIVqjA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/caniuse-lite/-/caniuse-lite-1.0.30001342.tgz}
+  registry.npmmirror.com/caniuse-lite/1.0.30001343:
+    resolution: {integrity: sha512-8KeCrAtPMabo/XW14B+R9sZYoClx1n0b+WYgwDKZPtWR3TcdvWzdSy7mPyFEmR5WU1St9v1PW6sdO5dkFOEzfA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/caniuse-lite/-/caniuse-lite-1.0.30001343.tgz}
     name: caniuse-lite
-    version: 1.0.30001342
+    version: 1.0.30001343
     dev: true
 
   registry.npmmirror.com/cfb/1.2.2:
