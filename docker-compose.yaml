@@ -1,18 +1,18 @@
 version: '3'
 services:
-  service: 
-    container_name: service
+  api: 
+    container_name: "nestjs-api"
     build: 
       context: .
       dockerfile: Dockerfile
     ports:
-      - "3000:3000"
+      - "7070:7070"
     restart: always
     depends_on:
-      - nestjs-redis
+      - redis
   redis:
-    container_name: nestjs-redis
     image: "redis:alpine"
+    container_name: "nestjs-redis"
     restart: always
     ports:
       - 6379:6379
