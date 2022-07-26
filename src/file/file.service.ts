@@ -6,7 +6,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 @Injectable()
 export class FileService {
   constructor(private readonly prisma: PrismaService) {}
-  async findMany(args: Prisma.fileFindManyArgs) {
+  async findMany(args: Prisma.FileFindManyArgs) {
     return this.prisma.file.findMany(args);
   }
 
@@ -16,14 +16,14 @@ export class FileService {
     });
   }
 
-  async pagination(args: Prisma.fileFindManyArgs) {
+  async pagination(args: Prisma.FileFindManyArgs) {
     return this.prisma.$transaction([
       this.prisma.file.findMany(args),
       this.prisma.file.count({ where: args.where }),
     ]);
   }
 
-  async create(data: Prisma.fileCreateInput) {
+  async create(data: Prisma.FileCreateInput) {
     return this.prisma.file.create({ data });
   }
 

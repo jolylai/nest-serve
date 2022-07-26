@@ -6,7 +6,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class AreaService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findMany(args: Prisma.areaFindManyArgs) {
+  async findMany(args: Prisma.AreaFindManyArgs) {
     return this.prisma.area.findMany(args);
   }
 }

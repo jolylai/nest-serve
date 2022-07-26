@@ -20,20 +20,20 @@ export class UserService {
     });
   }
 
-  async create(data: Prisma.userCreateInput) {
+  async create(data: Prisma.UserCreateInput) {
     return this.prisma.user.create({
       data,
     });
   }
 
-  async findMany(args: Prisma.userFindManyArgs) {
+  async findMany(args: Prisma.UserFindManyArgs) {
     return this.prisma.user.findMany({
       ...args,
-      select: { id: true, name: true, created_at: true, updated_at: true },
+      select: { id: true, name: true, createdAt: true, updatedAt: true },
     });
   }
 
-  async pagination(args: Prisma.userFindManyArgs) {
+  async pagination(args: Prisma.UserFindManyArgs) {
     return this.prisma.$transaction([
       this.prisma.user.findMany(args),
       this.prisma.user.count({ where: args.where }),

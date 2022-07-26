@@ -7,7 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model area {
+model Area {
   id        Int    @id @default(autoincrement())
   pid       Int
   name      String
@@ -16,48 +16,68 @@ model area {
   latitude  String
   level     Int
   sort      Int
-  status    Int    @default(1) @db.TinyInt
+  status    Int    @default(1) @db.TinyInt()
+
+  @@map("area")
 }
 
-model user {
-  id         Int            @id @default(autoincrement())
-  name       String
-  password   String
-  address    user_address[]
-  created_at DateTime       @default(now())
-  updated_at DateTime       @updatedAt
+model User {
+  id        Int           @id @default(autoincrement())
+  name      String
+  password  String
+  address   UserAddress[]
+  createdAt DateTime      @default(now()) @map("created_at")
+  updatedAt DateTime      @updatedAt @map("updated_at")
+
+  @@map("user")
 }
 
-model user_address {
-  id           Int      @id @default(autoincrement())
-  userId       Int
-  user         user     @relation(fields: [userId], references: [id])
-  name         String
-  mobile       String
-  provinceId   Int
-  cityId       Int
-  areaId       Int
-  address      String
-  full_address String
-  longitude    String
-  latitude     String
-  is_default   Int      @db.TinyInt
-  created_at   DateTime @default(now())
-  updated_at   DateTime @updatedAt
+model UserAddress {
+  id          Int      @id @default(autoincrement())
+  userId      Int      @map("user_id")
+  user        User     @relation(fields: [userId], references: [id])
+  name        String
+  mobile      String
+  provinceId  Int      @map("province_id")
+  cityId      Int      @map("city_id")
+  areaId      Int      @map("area_id")
+  address     String
+  fullAddress String   @map("full_address")
+  longitude   Float
+  latitude    Float
+  isDefault   Int      @map("is_default") @db.TinyInt
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("user_address")
 }
 
-model file {
-  id         Int      @id @default(autoincrement())
-  name       String
-  url        String
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+model File {
+  id        Int      @id @default(autoincrement())
+  name      String
+  url       String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("file")
 }
 
-model goods {
-  id         Int      @id @default(autoincrement())
-  name       String
-  url        String
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+model Goods {
+  id        Int      @id @default(autoincrement())
+  name      String
+  url       String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("goods")
+}
+
+model Order {
+  id        Int      @id @default(autoincrement())
+  no        String
+  url       String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("order")
 }
