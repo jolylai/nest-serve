@@ -11,6 +11,8 @@ import { AuthModule } from './auth/auth.module';
 import { FileService } from './file/file.service';
 import { FileModule } from './file/file.module';
 import { AreaModule } from './area/area.module';
+import { DepartmentService } from './department/department.service';
+import { DepartmentController } from './department/department.controller';
 
 @Module({
   imports: [
@@ -27,7 +29,7 @@ import { AreaModule } from './area/area.module';
     FileModule,
     AreaModule,
   ],
-  controllers: [AppController],
-  providers: [AppService, PrismaService, FileService],
+  controllers: [AppController, DepartmentController],
+  providers: [AppService, PrismaService, FileService, DepartmentService],
 })
 export class AppModule {}

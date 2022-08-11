@@ -81,3 +81,22 @@ model Order {
 
   @@map("order")
 }
+
+model Department {
+  id       Int     @id @default(autoincrement())
+  parentId Int     @map("parent_id")
+  name     String
+  order    Int
+  leader   String
+  phone    String
+  email    String
+  status   Boolean
+
+  createdBy Int      @map("created_by")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  updatedBy Int?      @map("updated_by")
+  updatedAt DateTime? @updatedAt @map("updated_at")
+
+  @@map("department")
+}
