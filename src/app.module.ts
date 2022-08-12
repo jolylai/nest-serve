@@ -16,6 +16,7 @@ import { DepartmentController } from './department/department.controller';
 import { JobController } from './job/job.controller';
 import { JobService } from './job/job.service';
 import { JobModule } from './job/job.module';
+import { MenuModule } from './menu/menu.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { JobModule } from './job/job.module';
     FileModule,
     AreaModule,
     JobModule,
+    MenuModule,
   ],
   controllers: [AppController, DepartmentController, JobController],
   providers: [AppService, PrismaService, FileService, DepartmentService, JobService],

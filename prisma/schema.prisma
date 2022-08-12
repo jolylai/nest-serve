@@ -110,3 +110,22 @@ model Job {
 
   @@map("job")
 }
+
+model Menu {
+  id       Int    @id @default(autoincrement())
+  type     String
+  icon     String
+  name     String
+  order    Int
+  path     String
+  parentId Int
+
+  isLink  Int @map("is_link") @db.TinyInt
+  visible Int @db.TinyInt
+  status  Int @db.TinyInt
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
+
+  @@map("menu")
+}
