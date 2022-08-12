@@ -1,14 +1,10 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { CreateUserAddressDto } from '../dtos/user-address.dto';
-import { UserAddressService } from '../services/user-address.service';
-import { UserService } from '../services/user.service';
+import { CreateUserAddressDto } from './user-address.dto';
+import { UserAddressService } from './user-address.service';
 
 @Controller('user-address')
 export class UserAddressController {
-  constructor(
-    private readonly userService: UserService,
-    private readonly userAddressService: UserAddressService,
-  ) {}
+  constructor(private readonly userAddressService: UserAddressService) {}
 
   @Get('/:userId')
   async findById(@Param('userId') useId: number) {

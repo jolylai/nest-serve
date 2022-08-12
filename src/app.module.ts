@@ -5,6 +5,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { NotifyModule } from './notify/notify.module';
 import { UserModule } from './user/user.module';
+import { UserAddressModule } from './user-address/user-address.module';
 import { PrismaService } from './prisma/prisma.service';
 import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './auth/auth.module';
@@ -28,6 +29,7 @@ import { MenuModule } from './menu/menu.module';
     }),
     NotifyModule,
     UserModule,
+    UserAddressModule,
     PrismaModule,
     AuthModule,
     FileModule,
@@ -36,6 +38,12 @@ import { MenuModule } from './menu/menu.module';
     MenuModule,
   ],
   controllers: [AppController, DepartmentController, JobController],
-  providers: [AppService, PrismaService, FileService, DepartmentService, JobService],
+  providers: [
+    AppService,
+    PrismaService,
+    FileService,
+    DepartmentService,
+    JobService,
+  ],
 })
 export class AppModule {}

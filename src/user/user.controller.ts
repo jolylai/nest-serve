@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { PaginationDto } from 'src/common/dtos/pagination.dto';
-import { CreateUserDto } from '../dtos/user.dto';
-import { UserService } from '../services/user.service';
+import { CreateUserDto } from './user.dto';
+import { UserService } from './user.service';
 
 @Controller('user')
 export class UserController {
