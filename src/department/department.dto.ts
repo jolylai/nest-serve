@@ -1,31 +1,19 @@
-import { IsBoolean, IsInt, IsNotEmpty, IsString } from 'class-validator';
+import { PartialType, PickType } from '@nestjs/swagger';
 
 export class DepartmentCreateDto {
-  @IsNotEmpty()
-  @IsString()
   name: string;
-
-  @IsNotEmpty()
-  @IsInt()
   parentId: number;
-
-  @IsNotEmpty()
-  @IsInt()
   order: number;
-
-  @IsNotEmpty()
-  @IsString()
   leader: string;
-
-  @IsNotEmpty()
-  @IsString()
   phone: string;
-
-  @IsNotEmpty()
-  @IsString()
   email: string;
+  status: number;
+}
 
-  @IsNotEmpty()
-  @IsBoolean()
-  status: boolean;
+export class DepartmentQueryDto extends PartialType(
+  PickType(DepartmentCreateDto, ['name', 'status']),
+) {}
+
+export class DepartmentUpdateDto extends PartialType(DepartmentCreateDto) {
+  id: number;
 }
