@@ -100,3 +100,16 @@ model Department {
 
   @@map("department")
 }
+
+model Job {
+  id        Int       @id @default(autoincrement())
+  code      String
+  name      String
+  order     Int
+  status    Int       @db.TinyInt
+  remark    String?
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
+
+  @@map("job")
+}
