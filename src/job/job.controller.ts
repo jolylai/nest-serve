@@ -22,11 +22,13 @@ export class JobController {
 
   @Get()
   async query(@Query() query: JobQueryDto, @Query() pagination: PaginationDto) {
-    return this.jobService.pagination({
+    const [list, total] = await this.jobService.pagination({
       take: pagination.take,
       skip: pagination.skip,
       where: query,
     });
+
+    return { list, total };
   }
 
   @Post()
