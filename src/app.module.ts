@@ -18,6 +18,7 @@ import { JobController } from './job/job.controller';
 import { JobService } from './job/job.service';
 import { JobModule } from './job/job.module';
 import { MenuModule } from './menu/menu.module';
+import { ExcelModule } from './excel/excel.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { MenuModule } from './menu/menu.module';
     AreaModule,
     JobModule,
     MenuModule,
+    ExcelModule,
   ],
   controllers: [AppController, DepartmentController, JobController],
   providers: [
