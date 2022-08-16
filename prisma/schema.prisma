@@ -22,17 +22,17 @@ model Area {
 }
 
 model User {
-  id        Int           @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   name      String
   password  String
-  address   UserAddress[]
-  createdAt DateTime      @default(now()) @map("created_at")
-  updatedAt DateTime      @updatedAt @map("updated_at")
+  address   Address[]
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
 
   @@map("user")
 }
 
-model UserAddress {
+model Address {
   id          Int      @id @default(autoincrement())
   userId      Int      @map("user_id")
   user        User     @relation(fields: [userId], references: [id])
@@ -49,7 +49,7 @@ model UserAddress {
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")
 
-  @@map("user_address")
+  @@map("address")
 }
 
 model File {

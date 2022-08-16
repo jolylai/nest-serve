@@ -6,7 +6,7 @@ Prisma 配置文件通常命名为 schema.prisma 包含以下三个部分
 2. generator: 指定基于 model 生成对应的客户端
 3. model: 定义应用的 model 和 关联关系
 
-```schema
+```
 model User {
   id        Int           @id @default(autoincrement())
   name      String

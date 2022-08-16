@@ -1,10 +1,10 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { CreateUserAddressDto } from './user-address.dto';
-import { UserAddressService } from './user-address.service';
+import { CreateAddressDto } from './address.dto';
+import { AddressService } from './address.service';
 
 @Controller('user-address')
-export class UserAddressController {
-  constructor(private readonly userAddressService: UserAddressService) {}
+export class AddressController {
+  constructor(private readonly userAddressService: AddressService) {}
 
   @Get('/:userId')
   async findById(@Param('userId') useId: number) {
@@ -12,7 +12,7 @@ export class UserAddressController {
   }
 
   @Post()
-  async create(@Body() userAddressDto: CreateUserAddressDto) {
+  async create(@Body() userAddressDto: CreateAddressDto) {
     const { userId, ...data } = userAddressDto;
     return this.userAddressService.create({
       user: {

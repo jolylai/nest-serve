@@ -1,11 +1,12 @@
 import { Module } from '@nestjs/common';
 import { BullModule } from '@nestjs/bull';
+import { ConfigModule } from '@nestjs/config';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { NotifyModule } from './notify/notify.module';
 import { UserModule } from './user/user.module';
-import { UserAddressModule } from './user-address/user-address.module';
+import { UserAddressModule } from './address/address.module';
 import { PrismaService } from './prisma/prisma.service';
 import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './auth/auth.module';
@@ -19,6 +20,7 @@ import { JobService } from './job/job.service';
 import { JobModule } from './job/job.module';
 import { MenuModule } from './menu/menu.module';
 import { ExcelModule } from './excel/excel.module';
+import { OssModule } from './oss/oss.module';
 
 @Module({
   imports: [
@@ -27,6 +29,9 @@ import { ExcelModule } from './excel/excel.module';
         host: 'localhost',
         port: 6379,
       },
+    }),
+    ConfigModule.forRoot({
+      isGlobal: true,
     }),
     NotifyModule,
     UserModule,
@@ -38,6 +43,7 @@ import { ExcelModule } from './excel/excel.module';
     JobModule,
     MenuModule,
     ExcelModule,
+    OssModule,
   ],
   controllers: [AppController, DepartmentController, JobController],
   providers: [

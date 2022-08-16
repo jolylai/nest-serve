@@ -6,7 +6,7 @@ import {
   IsString,
 } from 'class-validator';
 
-export class CreateUserAddressDto {
+export class CreateAddressDto {
   @IsNotEmpty()
   @IsInt()
   readonly userId: number;

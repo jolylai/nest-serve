@@ -24,11 +24,11 @@ function getGuideSidebar() {
     {
       text: 'Prisma',
       items: [
-        { text: 'cli', link: '/guide/prisma/cli' },
-        { text: 'schema', link: '/guide/prisma/schema' },
-        { text: 'relations', link: '/guide/prisma/relations' },
-        { text: 'client', link: '/guide/prisma/client' },
-        { text: 'Migrate', link: '/guide/prisma/migrate' },
+        { text: 'cli', link: '/nestjs/prisma/cli' },
+        { text: 'schema', link: '/nestjs/prisma/schema' },
+        { text: 'relations', link: '/nestjs/prisma/relations' },
+        { text: 'client', link: '/nestjs/prisma/client' },
+        { text: 'Migrate', link: '/nestjs/prisma/migrate' },
       ],
     },
   ];
