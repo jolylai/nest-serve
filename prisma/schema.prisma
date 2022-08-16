@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  // output   = "../node_modules/.prisma/client"
 }
 
 datasource db {
@@ -147,4 +148,33 @@ model Role {
   updatedAt DateTime? @updatedAt @map("updated_at")
 
   @@map("role")
+}
+
+model Dictionary {
+  id     Int    @id @default(autoincrement())
+  code   String @unique
+  name   String
+  status Int    @db.TinyInt
+  remark String
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
+
+  @@map("dictionary")
+}
+
+model DictionaryItem {
+  id     Int    @id @default(autoincrement())
+  labal  String
+  value  String
+  order  Int
+  status Int    @db.TinyInt
+  remark String
+
+  code String
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
+
+  @@map("dictionary_item")
 }

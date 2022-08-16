@@ -21,6 +21,7 @@ import { JobModule } from './job/job.module';
 import { MenuModule } from './menu/menu.module';
 import { ExcelModule } from './excel/excel.module';
 import { OssModule } from './oss/oss.module';
+import { DictionaryModule } from './dictionary/dictionary.module';
 
 @Module({
   imports: [
@@ -44,6 +45,7 @@ import { OssModule } from './oss/oss.module';
     MenuModule,
     ExcelModule,
     OssModule,
+    DictionaryModule,
   ],
   controllers: [AppController, DepartmentController, JobController],
   providers: [
