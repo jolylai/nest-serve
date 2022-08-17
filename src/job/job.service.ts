@@ -29,4 +29,10 @@ export class JobService {
       data,
     });
   }
+
+  async delete(jobId: number) {
+    return this.prismaService.job.delete({
+      where: { id: jobId },
+    });
+  }
 }

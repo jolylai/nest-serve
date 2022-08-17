@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -40,5 +41,10 @@ export class JobController {
   async update(@Body() data: JobUpdateDto) {
     const { id, ...rest } = data;
     return this.jobService.update(id, rest);
+  }
+
+  @Delete('/:id')
+  async delete(@Param('id') id: number) {
+    return this.jobService.delete(id);
   }
 }
