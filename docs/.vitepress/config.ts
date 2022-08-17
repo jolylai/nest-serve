@@ -8,7 +8,7 @@ export default defineConfig({
     nav: [
       {
         text: '指南',
-        link: '/guide/prisma/schema',
+        link: '/guide/restful',
         activeMatch: '^/guide/',
       },
     ],
@@ -20,15 +20,15 @@ export default defineConfig({
 
 function getGuideSidebar() {
   return [
-    // { text: '快速开始', link: '/guide/getting-started' },
+    { text: '快速开始', items: [{ text: 'RestFul', link: '/guide/restful' }] },
     {
       text: 'Prisma',
       items: [
-        { text: 'cli', link: '/nestjs/prisma/cli' },
-        { text: 'schema', link: '/nestjs/prisma/schema' },
-        { text: 'relations', link: '/nestjs/prisma/relations' },
-        { text: 'client', link: '/nestjs/prisma/client' },
-        { text: 'Migrate', link: '/nestjs/prisma/migrate' },
+        { text: 'cli', link: '/prisma/cli' },
+        { text: 'schema', link: '/prisma/schema' },
+        { text: 'relations', link: '/prisma/relations' },
+        { text: 'client', link: '/prisma/client' },
+        { text: 'Migrate', link: '/prisma/migrate' },
       ],
     },
   ];
