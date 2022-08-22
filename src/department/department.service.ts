@@ -24,6 +24,12 @@ export class DepartmentService {
     });
   }
 
+  async findByParentId(parentId: number) {
+    return this.prismaService.department.findMany({
+      where: { parentId },
+    });
+  }
+
   async update(jobId: number, data: Prisma.DepartmentUpdateInput) {
     return this.prismaService.department.update({
       where: { id: jobId },

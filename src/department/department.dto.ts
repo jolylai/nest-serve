@@ -1,19 +1,50 @@
-import { PartialType, PickType } from '@nestjs/swagger';
+import { IsIn, IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class DepartmentCreateDto {
-  name: string;
+  @IsNotEmpty()
+  @IsInt()
   parentId: number;
+
+  @IsNotEmpty()
+  @IsString()
+  name: string;
+
+  @IsNotEmpty()
+  @IsInt()
   order: number;
-  leader: string;
-  phone: string;
-  email: string;
+
+  @IsIn([0, 1])
   status: number;
 }
 
-export class DepartmentQueryDto extends PartialType(
-  PickType(DepartmentCreateDto, ['name', 'status']),
-) {}
+export class DepartmentQueryDto {
+  @IsOptional()
+  @IsString()
+  name: string;
 
-export class DepartmentUpdateDto extends PartialType(DepartmentCreateDto) {
+  @IsOptional()
+  @IsIn([0, 1])
+  status: number;
+}
+
+export class DepartmentUpdateDto {
+  @IsNotEmpty()
+  @IsInt()
   id: number;
+
+  @IsOptional()
+  @IsInt()
+  parentId: number;
+
+  @IsOptional()
+  @IsString()
+  name: string;
+
+  @IsOptional()
+  @IsInt()
+  order: number;
+
+  @IsOptional()
+  @IsIn([0, 1])
+  status: number;
 }

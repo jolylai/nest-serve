@@ -1,6 +1,5 @@
 generator client {
   provider = "prisma-client-js"
-  // output   = "../node_modules/.prisma/client"
 }
 
 datasource db {
@@ -84,30 +83,30 @@ model Order {
 }
 
 model Department {
-  id       Int    @id @default(autoincrement())
-  parentId Int    @map("parent_id")
-  name     String
-  order    Int
-  leader   String
-  phone    String
-  email    String
-  status   Int    @db.TinyInt
+  id         Int     @id @default(autoincrement())
+  parentId   Int     @map("parent_id")
+  ancestors  String
+  name       String
+  order      Int
+  status     Int     @db.TinyInt
+  leaderId   Int?
+  lerderName String?
 
-  createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("department")
 }
 
 model Job {
-  id        Int       @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   code      String
   name      String
   order     Int
-  status    Int       @db.TinyInt
+  status    Int      @db.TinyInt
   remark    String?
-  createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("job")
 }
@@ -125,8 +124,8 @@ model Menu {
   visible Int @db.TinyInt
   status  Int @db.TinyInt
 
-  createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("menu")
 }
@@ -144,8 +143,8 @@ model Role {
   visible Int @db.TinyInt
   status  Int @db.TinyInt
 
-  createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("role")
 }
@@ -154,11 +153,11 @@ model Dictionary {
   id     Int    @id @default(autoincrement())
   code   String @unique
   name   String
-  status Int    @db.TinyInt
+  status Int    @default(1) @db.TinyInt
   remark String
 
-  createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("dictionary")
 }
@@ -173,8 +172,8 @@ model DictionaryItem {
 
   code String
 
-  createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("dictionary_item")
 }

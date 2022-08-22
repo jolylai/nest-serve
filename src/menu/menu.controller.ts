@@ -7,7 +7,6 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
-import { PaginationDto } from 'src/common/dtos/pagination.dto';
 import { MenuCreateDto, MenuQueryDto, MenuUpdateDto } from './menu.dto';
 import { MenuService } from './menu.service';
 
@@ -21,15 +20,8 @@ export class MenuController {
   }
 
   @Get()
-  async query(
-    @Query() query: MenuQueryDto,
-    @Query() pagination: PaginationDto,
-  ) {
-    return this.menuService.pagination({
-      take: pagination.take,
-      skip: pagination.skip,
-      where: query,
-    });
+  async query(@Query() query: MenuQueryDto) {
+    return this.menuService.findChildren(query);
   }
 
   @Post()

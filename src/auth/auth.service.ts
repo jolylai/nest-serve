@@ -28,4 +28,8 @@ export class AuthService {
   async login(payload: any) {
     return { token: this.jwtService.sign(payload) };
   }
+
+  async getCaptcha() {
+    return '1234';
+  }
 }

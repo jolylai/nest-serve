@@ -1,5 +1,5 @@
-import { IsInt } from 'class-validator';
-import { PartialType, PickType } from '@nestjs/swagger';
+import { IsInt, IsNotEmpty, IsOptional } from 'class-validator';
+import { Type } from 'class-transformer';
 
 export class MenuCreateDto {
   type: string;
@@ -13,11 +13,15 @@ export class MenuCreateDto {
   status: number;
 }
 
-export class MenuQueryDto extends PartialType(
-  PickType(MenuCreateDto, ['name'] as const),
-) {}
+export class MenuQueryDto {
+  @IsOptional()
+  @Type(() => Number)
+  @IsInt()
+  parentId: number;
+}
 
-export class MenuUpdateDto extends PartialType(MenuCreateDto) {
+export class MenuUpdateDto {
+  @IsNotEmpty()
   @IsInt()
   id: number;
 }

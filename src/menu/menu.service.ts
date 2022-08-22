@@ -17,9 +17,15 @@ export class MenuService {
     return this.prismaService.menu.create({ data });
   }
 
-  async findById(jobId: number) {
+  async findById(id: number) {
     return this.prismaService.menu.findUnique({
-      where: { id: jobId },
+      where: { id: id },
+    });
+  }
+
+  async findChildren(where: Prisma.MenuWhereInput) {
+    return this.prismaService.menu.findMany({
+      where,
     });
   }
 

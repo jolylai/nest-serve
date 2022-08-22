@@ -19,21 +19,23 @@ import { DepartmentService } from './department.service';
 export class DepartmentController {
   constructor(private readonly departmentService: DepartmentService) {}
 
-  @Get('/:id')
-  async read(@Param('id') jobId: number) {
-    return this.departmentService.findById(jobId);
-  }
-
   @Get()
   async query(
     @Query() query: DepartmentQueryDto,
     @Query() pagination: PaginationDto,
   ) {
-    return this.departmentService.pagination({
+    const [list, total] = await this.departmentService.pagination({
       take: pagination.take,
       skip: pagination.skip,
       where: query,
     });
+
+    return { list, total };
+  }
+
+  @Get('/:id')
+  async read(@Param('id') id: number) {
+    return this.departmentService.findById(id);
   }
 
   @Post()
