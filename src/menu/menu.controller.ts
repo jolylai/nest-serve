@@ -21,7 +21,9 @@ export class MenuController {
 
   @Get()
   async query(@Query() query: MenuQueryDto) {
-    return this.menuService.findChildren(query);
+    return this.menuService.findChildren(
+      Object.assign({ parentId: null }, query),
+    );
   }
 
   @Post()

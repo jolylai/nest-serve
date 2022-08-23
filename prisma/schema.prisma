@@ -85,7 +85,7 @@ model Order {
 model Department {
   id         Int     @id @default(autoincrement())
   parentId   Int     @map("parent_id")
-  ancestors  String
+  ancestors  String?
   name       String
   order      Int
   status     Int     @db.TinyInt
@@ -113,16 +113,19 @@ model Job {
 
 model Menu {
   id       Int    @id @default(autoincrement())
-  type     String
-  icon     String
+  parentId Int?
+  type     Int    @db.TinyInt
   name     String
   order    Int
   path     String
-  parentId Int
 
-  isLink  Int @map("is_link") @db.TinyInt
-  visible Int @db.TinyInt
-  status  Int @db.TinyInt
+  icon        String?
+  isLink      Int?    @map("is_link") @db.TinyInt
+  isCache     Int?    @map("is_cache") @db.TinyInt
+  visible     Int?    @db.TinyInt
+  status      Int?    @db.TinyInt
+  query       String?
+  permissions String?
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")

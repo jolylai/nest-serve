@@ -1,15 +1,49 @@
-import { IsInt, IsNotEmpty, IsOptional } from 'class-validator';
+import { IsIn, IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class MenuCreateDto {
-  type: string;
-  icon: string;
+  @IsOptional()
+  @IsInt()
+  parentId: number = null;
+
+  @IsNotEmpty()
+  @IsInt()
+  type: number;
+
+  @IsNotEmpty()
+  @IsString()
   name: string;
+
+  @IsNotEmpty()
+  @IsInt()
   order: number;
+
+  @IsNotEmpty()
+  @IsString()
   path: string;
-  parentId: number;
+
+  @IsOptional()
+  @IsString()
+  icon: string;
+
+  @IsOptional()
+  @IsString()
+  permissions: string;
+
+  @IsOptional()
+  @IsString()
+  query: string;
+
+  @IsOptional()
+  @IsIn([0, 1])
   isLink: number;
+
+  @IsOptional()
+  @IsIn([0, 1])
   visible: number;
+
+  @IsOptional()
+  @IsIn([0, 1])
   status: number;
 }
 

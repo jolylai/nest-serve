@@ -25,7 +25,7 @@ export class AuthController {
   @Post('login')
   async login(@Request() request: any) {
     const token = await this.authService.jwtSign(request.user);
-    return { token };
+    return { token: `${token}` };
   }
 
   @Public()
