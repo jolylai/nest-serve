@@ -120,15 +120,16 @@ model Menu {
   path     String
 
   icon        String?
-  isLink      Int?    @map("is_link") @db.TinyInt
-  isCache     Int?    @map("is_cache") @db.TinyInt
-  visible     Int?    @db.TinyInt
-  status      Int?    @db.TinyInt
+  isLink      Int?     @map("is_link") @db.TinyInt
+  isCache     Int?     @map("is_cache") @db.TinyInt
+  visible     Int?     @db.TinyInt
+  status      Int?     @db.TinyInt
   query       String?
   permissions String?
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  ancestors   String
+  isLeaf      Boolean
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
 
   @@map("menu")
 }

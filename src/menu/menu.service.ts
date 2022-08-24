@@ -35,4 +35,15 @@ export class MenuService {
       data,
     });
   }
+
+  async upsert({
+    id,
+    ...data
+  }: (Prisma.MenuUpdateInput | Prisma.MenuCreateInput) & { id?: number }) {
+    return this.prismaService.menu.upsert({
+      where: { id: id as number },
+      create: data as Prisma.MenuCreateInput,
+      update: data as Prisma.MenuUpdateInput,
+    });
+  }
 }

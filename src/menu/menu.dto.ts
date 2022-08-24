@@ -1,7 +1,11 @@
 import { IsIn, IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import { Type } from 'class-transformer';
 
-export class MenuCreateDto {
+export class MenuCreateOrUpdateDto {
+  @IsNotEmpty()
+  @IsInt()
+  id: number;
+
   @IsOptional()
   @IsInt()
   parentId: number = null;
@@ -52,10 +56,4 @@ export class MenuQueryDto {
   @Type(() => Number)
   @IsInt()
   parentId: number;
-}
-
-export class MenuUpdateDto {
-  @IsNotEmpty()
-  @IsInt()
-  id: number;
 }

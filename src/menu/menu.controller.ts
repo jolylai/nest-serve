@@ -7,7 +7,7 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
-import { MenuCreateDto, MenuQueryDto, MenuUpdateDto } from './menu.dto';
+import { MenuCreateOrUpdateDto, MenuQueryDto } from './menu.dto';
 import { MenuService } from './menu.service';
 
 @Controller('menu')
@@ -21,18 +21,16 @@ export class MenuController {
 
   @Get()
   async query(@Query() query: MenuQueryDto) {
-    return this.menuService.findChildren(
-      Object.assign({ parentId: null }, query),
-    );
+    return this.menuService.findChildren(Object.assign({}, query));
   }
 
   @Post()
-  async create(@Body() data: MenuCreateDto) {
-    return this.menuService.create(data);
+  async create(@Body() data: MenuCreateOrUpdateDto) {
+    return this.menuService.upsert(data);
   }
 
   @Patch()
-  async update(@Body() data: MenuUpdateDto) {
+  async update(@Body() data: MenuCreateOrUpdateDto) {
     const { id, ...rest } = data;
     return this.menuService.update(id, rest);
   }
