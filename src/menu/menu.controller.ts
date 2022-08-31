@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -33,5 +34,10 @@ export class MenuController {
   async update(@Body() data: MenuCreateOrUpdateDto) {
     const { id, ...rest } = data;
     return this.menuService.update(id, rest);
+  }
+
+  @Delete('/:id')
+  async delete(@Param('id') id: number) {
+    return this.menuService.delete(id);
   }
 }

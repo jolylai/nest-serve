@@ -46,4 +46,10 @@ export class MenuService {
       update: data as Prisma.MenuUpdateInput,
     });
   }
+
+  async delete(id: number) {
+    return this.prismaService.menu.delete({
+      where: { id },
+    });
+  }
 }
