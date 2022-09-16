@@ -2,7 +2,7 @@ local.strategy.ts -> authService -> userService
 
 ## JWT
 
-## 普通登录
+## 手机号登录
 
 ```json
 {
@@ -12,6 +12,8 @@ local.strategy.ts -> authService -> userService
   "type": "mobile"
 }
 ```
+
+## 用户名/密码
 
 ```json
 {

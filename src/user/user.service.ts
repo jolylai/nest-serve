@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '@/prisma/prisma.service';
 
 @Injectable()
 export class UserService {
@@ -9,6 +9,12 @@ export class UserService {
   async findById(userId: number) {
     return this.prisma.user.findUnique({
       where: { id: userId },
+    });
+  }
+
+  async findByMobile(mobile: string) {
+    return this.prisma.user.findUnique({
+      where: { mobile },
     });
   }
 

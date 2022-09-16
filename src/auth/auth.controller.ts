@@ -29,6 +29,13 @@ export class AuthController {
   }
 
   @Public()
+  @Post('login/mobile')
+  async mobileLogin(@Request() request: any) {
+    const token = await this.authService.jwtSign(request.user);
+    return { token: `${token}` };
+  }
+
+  @Public()
   @Get('login/captcha')
   async getCaptcha() {
     return this.authService.getCaptcha();
@@ -43,6 +50,7 @@ export class AuthController {
 
     return this.userService.create({
       name: username,
+      mobile: '',
       password: encryptedPassword,
     });
   }

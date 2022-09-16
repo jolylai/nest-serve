@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { Observable } from 'rxjs';
-import { Public } from 'src/auth/auth.decorator';
+import { Public } from '@/auth/auth.decorator';
 import { ChanifyDto, ChanifyResponse } from './notify.dto';
 import { NotifyService } from './notify.service';
 
