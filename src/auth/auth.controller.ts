@@ -2,6 +2,8 @@ import {
   Body,
   Controller,
   Get,
+  HttpCode,
+  HttpStatus,
   Post,
   Request,
   UseGuards,
@@ -13,14 +15,24 @@ import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import * as bcrypt from 'bcrypt';
 import { ApiTags } from '@nestjs/swagger';
+import { AuthEmailLoginDto } from './dto/auth-email-login.dto';
 
 @ApiTags('权鉴')
-@Controller()
+@Controller({
+  path: 'auth',
+  version: '1',
+})
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
     private readonly userService: UserService,
   ) {}
+
+  @Post('email/login')
+  @HttpCode(HttpStatus.OK)
+  async emailLogin(@Body() emailLoginDto: AuthEmailLoginDto) {
+
+  }
 
   @Public()
   @UseGuards(LocalAuthGuard)

@@ -22,20 +22,33 @@ model Area {
 }
 
 model User {
-  id        Int       @id @default(autoincrement())
-  name      String
-  mobile    String    @unique
-  password  String
-  address   Address[]
-  createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime  @updatedAt @map("updated_at")
+  id       String    @id @default(cuid())
+  name     String
+  mobile   String    @unique
+  password String
+  address  Address[]
+  sessions Session[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("user")
 }
 
+model Session {
+  id        String   @id
+  device    String
+  os        String
+  userId    String
+  expiresAt DateTime
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+}
+
 model Address {
   id          Int      @id @default(autoincrement())
-  userId      Int      @map("user_id")
+  userId      String   @map("user_id")
   user        User     @relation(fields: [userId], references: [id])
   name        String
   mobile      String

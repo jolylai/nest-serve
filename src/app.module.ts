@@ -2,8 +2,6 @@ import { Module } from '@nestjs/common';
 import { BullModule } from '@nestjs/bull';
 import { ConfigModule } from '@nestjs/config';
 
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { NotifyModule } from './notify/notify.module';
 import { UserModule } from './user/user.module';
 import { UserAddressModule } from './address/address.module';
@@ -22,6 +20,7 @@ import { MenuModule } from './menu/menu.module';
 import { ExcelModule } from './excel/excel.module';
 import { OssModule } from './oss/oss.module';
 import { DictionaryModule } from './dictionary/dictionary.module';
+import authConfig from './auth/config/auth-config';
 
 @Module({
   imports: [
@@ -33,6 +32,18 @@ import { DictionaryModule } from './dictionary/dictionary.module';
     }),
     ConfigModule.forRoot({
       isGlobal: true,
+      load: [
+        authConfig,
+        // databaseConfig,
+        // appConfig,
+        // mailConfig,
+        // fileConfig,
+        // facebookConfig,
+        // googleConfig,
+        // twitterConfig,
+        // appleConfig,
+      ],
+      envFilePath: ['.env'],
     }),
     NotifyModule,
     UserModule,
@@ -47,13 +58,7 @@ import { DictionaryModule } from './dictionary/dictionary.module';
     OssModule,
     DictionaryModule,
   ],
-  controllers: [AppController, DepartmentController, JobController],
-  providers: [
-    AppService,
-    PrismaService,
-    FileService,
-    DepartmentService,
-    JobService,
-  ],
+  controllers: [DepartmentController, JobController],
+  providers: [PrismaService, FileService, DepartmentService, JobService],
 })
 export class AppModule {}
