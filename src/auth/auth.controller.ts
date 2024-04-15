@@ -12,7 +12,9 @@ import { RegisterDto } from './auth.dto';
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import * as bcrypt from 'bcrypt';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('权鉴')
 @Controller()
 export class AuthController {
   constructor(
