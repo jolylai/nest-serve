@@ -9,7 +9,7 @@ import {
 export class CreateAddressDto {
   @IsNotEmpty()
   @IsInt()
-  readonly userId: number;
+  readonly userId: string;
 
   @IsNotEmpty()
   @IsString()

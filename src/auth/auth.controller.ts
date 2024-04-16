@@ -7,15 +7,18 @@ import {
   Post,
   Request,
   UseGuards,
+  SerializeOptions,
 } from '@nestjs/common';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { UserService } from 'src/user/user.service';
 import { Public } from './auth.decorator';
 import { RegisterDto } from './auth.dto';
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import * as bcrypt from 'bcrypt';
-import { ApiTags } from '@nestjs/swagger';
 import { AuthEmailLoginDto } from './dto/auth-email-login.dto';
+import { AuthMobileLoginDto } from './dto/auth-mobile-login.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('权鉴')
 @Controller({
@@ -28,25 +31,25 @@ export class AuthController {
     private readonly userService: UserService,
   ) {}
 
-  @Post('email/login')
+  // @Post('email/login')
+  // @HttpCode(HttpStatus.OK)
+  // async emailLogin(@Body() emailLoginDto: AuthEmailLoginDto) {
+  //   return this.authService.validateEmailLogin(emailLoginDto);
+  // }
+
+  // @Public()
+  // @UseGuards(LocalAuthGuard)
+  // @Post('login')
+  // async login(@Request() request: any) {
+  //   const token = await this.authService.jwtSign(request.user);
+  //   return { token: `${token}` };
+  // }
+
+  @Public()
+  @Post('mobile/login')
   @HttpCode(HttpStatus.OK)
-  async emailLogin(@Body() emailLoginDto: AuthEmailLoginDto) {
-
-  }
-
-  @Public()
-  @UseGuards(LocalAuthGuard)
-  @Post('login')
-  async login(@Request() request: any) {
-    const token = await this.authService.jwtSign(request.user);
-    return { token: `${token}` };
-  }
-
-  @Public()
-  @Post('login/mobile')
-  async mobileLogin(@Request() request: any) {
-    const token = await this.authService.jwtSign(request.user);
-    return { token: `${token}` };
+  async mobileLogin(@Body() mobileLoginDto: AuthMobileLoginDto) {
+    return this.authService.validateMobileLogin(mobileLoginDto);
   }
 
   @Public()
@@ -54,6 +57,17 @@ export class AuthController {
   async getCaptcha() {
     return this.authService.getCaptcha();
   }
+
+  // @ApiBearerAuth()
+  // @SerializeOptions({
+  //   groups: ['me'],
+  // })
+  // @Get('me')
+  // @UseGuards(AuthGuard('jwt'))
+  // @HttpCode(HttpStatus.OK)
+  // public me(@Request() request): Promise<NullableType<User>> {
+  //   return this.service.me(request.user);
+  // }
 
   @Public()
   @Post('register')

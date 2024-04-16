@@ -6,7 +6,7 @@ import { PrismaService } from '@/prisma/prisma.service';
 export class AddressService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async find(userId: number) {
+  async find(userId: string) {
     return this.prisma.address.findMany({
       where: { userId },
     });

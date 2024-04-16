@@ -45,7 +45,7 @@ export class AuthService {
       throw new UnprocessableEntityException({
         status: HttpStatus.UNPROCESSABLE_ENTITY,
         errors: {
-          password: 'incorrectPassword',
+          password: '密码错误',
         },
       });
     }
@@ -55,14 +55,22 @@ export class AuthService {
       .update(randomStringGenerator())
       .digest('hex');
 
+    // 创建 session
     const session = await this.sessionService.create({
-      user,
-      hash,
+      id: hash,
+      user: {
+        connect: {
+          id: user.id,
+        },
+      },
+      device: '',
+      os: '',
+      expiresAt: new Date(Date.now() + ms('1d')),
     });
 
     const { token, refreshToken, tokenExpires } = await this.getTokensData({
       id: user.id,
-      role: user.role,
+      // role: user.role,
       sessionId: session.id,
       hash,
     });
@@ -100,7 +108,7 @@ export class AuthService {
 
   private async getTokensData(data: {
     id: string;
-    role: string;
+    // role: string;
     sessionId: string;
     hash: string;
   }) {
@@ -115,7 +123,7 @@ export class AuthService {
       await this.jwtService.signAsync(
         {
           id: data.id,
-          role: data.role,
+          // role: data.role,
           sessionId: data.sessionId,
         },
         {

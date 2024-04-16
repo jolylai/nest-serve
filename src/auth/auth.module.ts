@@ -8,6 +8,7 @@ import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { LocalStrategy } from './strategies/local.strategy';
+import { SessionModule } from '@/session/session.module';
 // import { MobileStrategy } from './strategies/mobile.strategy';
 
 @Module({
@@ -18,6 +19,7 @@ import { LocalStrategy } from './strategies/local.strategy';
       secret: 'secret',
       signOptions: { expiresIn: '24h' },
     }),
+    SessionModule,
   ],
   controllers: [AuthController],
   providers: [

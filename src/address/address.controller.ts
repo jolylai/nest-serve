@@ -7,7 +7,7 @@ export class AddressController {
   constructor(private readonly userAddressService: AddressService) {}
 
   @Get('/:userId')
-  async findById(@Param('userId') useId: number) {
+  async findById(@Param('userId') useId: string) {
     return this.userAddressService.find(useId);
   }
 
