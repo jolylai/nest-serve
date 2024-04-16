@@ -9,10 +9,12 @@ import crypto from 'crypto';
 import bcrypt from 'bcryptjs';
 import { UserService } from 'src/user/user.service';
 import { randomStringGenerator } from '@nestjs/common/utils/random-string-generator.util';
-import { AuthMobileLoginDto } from './dto/auth-mobile-login.dto';
 import { ConfigService } from '@nestjs/config';
 import { AllConfigType } from '@/config/config.type';
 import { SessionService } from '@/session/session.service';
+import { AuthMobileLoginDto, AuthPasswordLoginDto } from './dto/auth-login.dto';
+import { AuthMobileRegisterDto } from './dto/auth-register.dto';
+import { JwtPayloadType } from './types/jwt.type';
 
 @Injectable()
 export class AuthService {
@@ -37,7 +39,7 @@ export class AuthService {
 
     // 效验密码
     const isValidPassword = await bcrypt.compare(
-      mobileLoginDto.password,
+      mobileLoginDto.captcha,
       user.password,
     );
 
@@ -83,8 +85,64 @@ export class AuthService {
     };
   }
 
-  async validateMobile(mobile: string) {
-    return this.userService.findByMobile(mobile);
+  async validatePasswordLogin(passwordLoginDto: AuthPasswordLoginDto) {
+    const user = await this.userService.findByMobile(passwordLoginDto.mobile);
+
+    if (!user) {
+      throw new UnprocessableEntityException({
+        status: HttpStatus.UNPROCESSABLE_ENTITY,
+        errors: {
+          mobile: '用户不存在',
+        },
+      });
+    }
+
+    // 效验密码
+    const isValidPassword = await bcrypt.compare(
+      passwordLoginDto.password,
+      user.password,
+    );
+
+    if (!isValidPassword) {
+      throw new UnprocessableEntityException({
+        status: HttpStatus.UNPROCESSABLE_ENTITY,
+        errors: {
+          password: '密码错误',
+        },
+      });
+    }
+
+    const hash = crypto
+      .createHash('sha256')
+      .update(randomStringGenerator())
+      .digest('hex');
+
+    // 创建 session
+    const session = await this.sessionService.create({
+      id: hash,
+      user: {
+        connect: {
+          id: user.id,
+        },
+      },
+      device: '',
+      os: '',
+      expiresAt: new Date(Date.now() + ms('1d')),
+    });
+
+    const { token, refreshToken, tokenExpires } = await this.getTokensData({
+      id: user.id,
+      // role: user.role,
+      sessionId: session.id,
+      hash,
+    });
+
+    return {
+      refreshToken,
+      token,
+      tokenExpires,
+      user,
+    };
   }
 
   async validateUser(mobile: string, password: string) {
@@ -104,6 +162,14 @@ export class AuthService {
 
   async getCaptcha() {
     return '1234';
+  }
+
+  async mobileRegister(dto: AuthMobileRegisterDto) {
+    return this.userService.create({
+      name: dto.mobile,
+      mobile: dto.mobile,
+      password: dto.captcha,
+    });
   }
 
   private async getTokensData(data: {
@@ -127,8 +193,9 @@ export class AuthService {
           sessionId: data.sessionId,
         },
         {
-          // secret: this.configService.getOrThrow('auth.secret', { infer: true }),
-          secret: 'secret',
+          secret: this.configService.getOrThrow<AllConfigType>('auth.secret', {
+            infer: true,
+          }),
           expiresIn: tokenExpiresIn,
         },
       ),
@@ -138,14 +205,18 @@ export class AuthService {
           hash: data.hash,
         },
         {
-          // secret: this.configService.getOrThrow('auth.refreshSecret', {
-          //   infer: true,
-          // }),
-          secret: 'secret',
-          // expiresIn: this.configService.getOrThrow('auth.refreshExpires', {
-          //   infer: true,
-          // }),
-          expiresIn: '7d',
+          secret: this.configService.getOrThrow<AllConfigType>(
+            'auth.refreshSecret',
+            {
+              infer: true,
+            },
+          ),
+          expiresIn: this.configService.getOrThrow<AllConfigType>(
+            'auth.refreshExpires',
+            {
+              infer: true,
+            },
+          ),
         },
       ),
     ]);
@@ -155,5 +226,9 @@ export class AuthService {
       refreshToken,
       tokenExpires,
     };
+  }
+
+  async me(userJwtPayload: JwtPayloadType) {
+    return this.userService.findById(userJwtPayload.id);
   }
 }

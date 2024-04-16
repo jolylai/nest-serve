@@ -25,14 +25,15 @@ async function bootstrap() {
   );
 
   // swagger
-  const config = new DocumentBuilder()
-    .setTitle('Nest.js')
-    .setDescription('Nest.js service')
+  const options = new DocumentBuilder()
+    .setTitle('API')
+    .setDescription('API docs')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
 
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  const document = SwaggerModule.createDocument(app, options);
+  SwaggerModule.setup('docs', app, document);
 
   app.enableShutdownHooks();
 

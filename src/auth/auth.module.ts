@@ -12,23 +12,9 @@ import { SessionModule } from '@/session/session.module';
 // import { MobileStrategy } from './strategies/mobile.strategy';
 
 @Module({
-  imports: [
-    UserModule,
-    PassportModule,
-    JwtModule.register({
-      secret: 'secret',
-      signOptions: { expiresIn: '24h' },
-    }),
-    SessionModule,
-  ],
+  imports: [UserModule, PassportModule, JwtModule.register({}), SessionModule],
   controllers: [AuthController],
-  providers: [
-    AuthService,
-    LocalStrategy,
-    JwtStrategy,
-    // MobileStrategy,
-    { provide: APP_GUARD, useClass: JwtAuthGuard },
-  ],
+  providers: [AuthService, LocalStrategy, JwtStrategy],
   exports: [AuthService],
 })
 export class AuthModule {}

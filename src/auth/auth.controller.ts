@@ -16,9 +16,9 @@ import { RegisterDto } from './auth.dto';
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import * as bcrypt from 'bcrypt';
-import { AuthEmailLoginDto } from './dto/auth-email-login.dto';
-import { AuthMobileLoginDto } from './dto/auth-mobile-login.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { AuthMobileRegisterDto } from './dto/auth-register.dto';
+import { AuthMobileLoginDto, AuthPasswordLoginDto } from './dto/auth-login.dto';
 
 @ApiTags('权鉴')
 @Controller({
@@ -46,10 +46,23 @@ export class AuthController {
   // }
 
   @Public()
+  @Post('password/login')
+  @HttpCode(HttpStatus.OK)
+  async passwordLogin(@Body() passwordLoginDto: AuthPasswordLoginDto) {
+    return this.authService.validatePasswordLogin(passwordLoginDto);
+  }
+
+  @Public()
   @Post('mobile/login')
   @HttpCode(HttpStatus.OK)
   async mobileLogin(@Body() mobileLoginDto: AuthMobileLoginDto) {
     return this.authService.validateMobileLogin(mobileLoginDto);
+  }
+
+  @Public()
+  @Post('mobile/register')
+  async register(@Body() mobileRegisterDto: AuthMobileRegisterDto) {
+    return this.authService.mobileRegister(mobileRegisterDto);
   }
 
   @Public()
@@ -58,28 +71,14 @@ export class AuthController {
     return this.authService.getCaptcha();
   }
 
-  // @ApiBearerAuth()
-  // @SerializeOptions({
-  //   groups: ['me'],
-  // })
-  // @Get('me')
-  // @UseGuards(AuthGuard('jwt'))
-  // @HttpCode(HttpStatus.OK)
-  // public me(@Request() request): Promise<NullableType<User>> {
-  //   return this.service.me(request.user);
-  // }
-
-  @Public()
-  @Post('register')
-  async register(@Body() registerDto: RegisterDto) {
-    const { username, password } = registerDto;
-    const salt = await bcrypt.genSalt(10);
-    const encryptedPassword = await bcrypt.hash(password, salt);
-
-    return this.userService.create({
-      name: username,
-      mobile: '',
-      password: encryptedPassword,
-    });
+  @ApiBearerAuth()
+  @SerializeOptions({
+    groups: ['me'],
+  })
+  @Get('me')
+  @UseGuards(AuthGuard('jwt'))
+  @HttpCode(HttpStatus.OK)
+  public me(@Request() request) {
+    return this.authService.me(request.user);
   }
 }

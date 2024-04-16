@@ -11,3 +11,13 @@ export class AuthMobileRegisterDto {
   @MinLength(6)
   captcha: string;
 }
+
+export class AuthEmailRegisterDto {
+  @ApiProperty({ example: '18188888888' })
+  @IsPhoneNumber()
+  mobile: string;
+
+  @ApiProperty()
+  @MinLength(6)
+  captcha: string;
+}
