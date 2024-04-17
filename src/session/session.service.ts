@@ -21,6 +21,10 @@ export class SessionService {
     });
   }
 
+  async delete(where: Prisma.SessionWhereUniqueInput) {
+    return this.prisma.session.delete({ where });
+  }
+
   // async softDelete(criteria: {
   //   id?: Session['id'];
   //   user?: Pick<User, 'id'>;

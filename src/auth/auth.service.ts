@@ -271,6 +271,12 @@ export class AuthService {
     };
   }
 
+  async logout(data: Pick<JwtRefreshPayloadType, 'sessionId'>) {
+    return this.sessionService.delete({
+      id: data.sessionId,
+    });
+  }
+
   async me(userJwtPayload: JwtPayloadType) {
     return this.userService.findById(userJwtPayload.id);
   }

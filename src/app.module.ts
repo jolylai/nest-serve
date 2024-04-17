@@ -20,7 +20,7 @@ import { MenuModule } from './menu/menu.module';
 import { ExcelModule } from './excel/excel.module';
 import { OssModule } from './oss/oss.module';
 import { DictionaryModule } from './dictionary/dictionary.module';
-import authConfig from './auth/config/auth-config';
+import authConfig from './config/auth-config';
 
 @Module({
   imports: [

@@ -1,5 +1,5 @@
 // import { AppConfig } from './app-config.type';
-import { AuthConfig } from '../auth/config/auth-config.type';
+import { AuthConfig } from './auth-config.type';
 // import { AppleConfig } from '../auth-apple/config/apple-config.type';
 // import { DatabaseConfig } from '../database/config/database-config.type';
 // import { FacebookConfig } from '../auth-facebook/config/facebook-config.type';

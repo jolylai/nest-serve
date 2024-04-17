@@ -64,6 +64,16 @@ export class AuthController {
   }
 
   @ApiBearerAuth()
+  @Post('logout')
+  @UseGuards(AuthGuard('jwt'))
+  @HttpCode(HttpStatus.NO_CONTENT)
+  public async logout(@Request() request): Promise<void> {
+    await this.authService.logout({
+      sessionId: request.user.sessionId,
+    });
+  }
+
+  @ApiBearerAuth()
   @SerializeOptions({
     groups: ['me'],
   })
