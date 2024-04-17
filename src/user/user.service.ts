@@ -26,6 +26,12 @@ export class UserService {
     });
   }
 
+  async findFirst(where: Prisma.UserWhereInput) {
+    return this.prisma.user.findFirst({
+      where,
+    });
+  }
+
   async create(data: Prisma.UserCreateInput) {
     return this.prisma.user.create({
       data,

@@ -6,8 +6,8 @@ import { Prisma } from '@prisma/client';
 export class SessionService {
   constructor(private readonly prisma: PrismaService) {}
 
-  findFirst(options: Prisma.SessionFindFirstArgs) {
-    return this.prisma.session.findFirst(options);
+  findFirst(options: Prisma.SessionWhereInput) {
+    return this.prisma.session.findFirst({ where: options });
   }
 
   create(data: Prisma.SessionCreateInput) {

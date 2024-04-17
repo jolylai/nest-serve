@@ -20,7 +20,9 @@ import { Queue } from 'bull';
 import { PaginationDto } from 'src/common/dtos/pagination.dto';
 import { FileService } from './file.service';
 import { getContentType, getFilePath } from './file.util';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Files')
 @Controller('file')
 export class FileController {
   constructor(
