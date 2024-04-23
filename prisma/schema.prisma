@@ -27,7 +27,8 @@ model User {
   mobile   String    @unique
   password String
   address  Address[]
-  sessions Session[]
+  session  Session[]
+  account  Account?
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -35,14 +36,50 @@ model User {
   @@map("user")
 }
 
+model Account {
+  id                       String  @id @default(cuid())
+  userId                   String  @unique
+  type                     String
+  provider                 String
+  providerAccountId        String
+  refresh_token            String? @db.Text
+  access_token             String? @db.Text
+  expires_at               Int?
+  token_type               String?
+  scope                    String?
+  id_token                 String? @db.Text
+  session_state            String?
+  refresh_token_expires_in Int?
+  user                     User?   @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
 model Session {
-  id        String   @id
-  device    String
-  os        String
-  userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id           String @id @default(cuid())
+  sessionToken String @unique
+  os           String
+  device       String
+  userId       String
+  user         User   @relation(fields: [userId], references: [id])
+
   expiresAt DateTime
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expiresAt  DateTime
+
+  @@unique([identifier, token])
 }
 
 model Address {

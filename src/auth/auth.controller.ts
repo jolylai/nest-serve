@@ -13,8 +13,15 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { UserService } from 'src/user/user.service';
 import { AuthService } from './auth.service';
-import { AuthMobileRegisterDto } from './dto/auth-register.dto';
-import { AuthMobileLoginDto, AuthPasswordLoginDto } from './dto/auth-login.dto';
+import {
+  AuthEmailRegisterDto,
+  AuthMobileRegisterDto,
+} from './dto/auth-register.dto';
+import {
+  AuthMobileCaptchaDto,
+  AuthMobileLoginDto,
+  AuthPasswordLoginDto,
+} from './dto/auth-login.dto';
 
 @ApiTags('权鉴')
 @Controller({
@@ -33,20 +40,26 @@ export class AuthController {
     return this.authService.validatePasswordLogin(passwordLoginDto);
   }
 
+  @Post('mobile/captcha')
+  @HttpCode(HttpStatus.OK)
+  async mobileCaptcha(@Body() mobileCaptchaDto: AuthMobileCaptchaDto) {
+    return this.authService.getCaptcha(mobileCaptchaDto.mobile);
+  }
+
   @Post('mobile/login')
   @HttpCode(HttpStatus.OK)
   async mobileLogin(@Body() mobileLoginDto: AuthMobileLoginDto) {
     return this.authService.validateMobileLogin(mobileLoginDto);
   }
 
+  @Post('email/register')
+  async emailRegister(@Body() emailRegisterDto: AuthEmailRegisterDto) {
+    return this.authService.emailRegister(emailRegisterDto);
+  }
+
   @Post('mobile/register')
   async register(@Body() mobileRegisterDto: AuthMobileRegisterDto) {
     return this.authService.mobileRegister(mobileRegisterDto);
-  }
-
-  @Get('login/captcha')
-  async getCaptcha() {
-    return this.authService.getCaptcha();
   }
 
   @ApiBearerAuth()

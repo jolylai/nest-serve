@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, IsPhoneNumber, MinLength } from 'class-validator';
-import { Transform } from 'class-transformer';
+import { IsEmail, IsPhoneNumber, MinLength } from 'class-validator';
 
 export class AuthMobileRegisterDto {
   @ApiProperty({ example: '18188888888' })
@@ -13,11 +12,11 @@ export class AuthMobileRegisterDto {
 }
 
 export class AuthEmailRegisterDto {
-  @ApiProperty({ example: '18188888888' })
-  @IsPhoneNumber()
-  mobile: string;
+  @ApiProperty({ example: '123@qq.com' })
+  @IsEmail()
+  email: string;
 
   @ApiProperty()
   @MinLength(6)
-  captcha: string;
+  password: string;
 }

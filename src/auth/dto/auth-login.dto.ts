@@ -1,11 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  IsEmail,
-  IsMobilePhone,
-  IsNotEmpty,
-  IsPhoneNumber,
-  IsString,
-} from 'class-validator';
+import { IsEmail, IsMobilePhone, IsNotEmpty } from 'class-validator';
 
 export class AuthMobileLoginDto {
   @ApiProperty({ example: '18188888888' })
@@ -38,4 +32,11 @@ export class AuthPasswordLoginDto {
   @ApiProperty({ example: '123456' })
   @IsNotEmpty()
   password: string;
+}
+
+export class AuthMobileCaptchaDto {
+  @ApiProperty({ example: '+8618188888888' })
+  @IsMobilePhone('zh-CN')
+  @IsNotEmpty()
+  mobile: string;
 }

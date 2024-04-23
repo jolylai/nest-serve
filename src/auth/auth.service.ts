@@ -14,12 +14,17 @@ import { ConfigService } from '@nestjs/config';
 import { AllConfigType } from '@/config/config.type';
 import { SessionService } from '@/session/session.service';
 import { AuthMobileLoginDto, AuthPasswordLoginDto } from './dto/auth-login.dto';
-import { AuthMobileRegisterDto } from './dto/auth-register.dto';
+import {
+  AuthEmailRegisterDto,
+  AuthMobileRegisterDto,
+} from './dto/auth-register.dto';
 import { JwtPayloadType, JwtRefreshPayloadType } from './types/jwt.type';
+import { PrismaService } from '@/prisma/prisma.service';
 
 @Injectable()
 export class AuthService {
   constructor(
+    private readonly prisma: PrismaService,
     private readonly userService: UserService,
     private readonly jwtService: JwtService,
     private configService: ConfigService<AllConfigType>,
@@ -60,7 +65,7 @@ export class AuthService {
 
     // 创建 session
     const session = await this.sessionService.create({
-      id: hash,
+      sessionToken: hash,
       user: {
         connect: {
           id: user.id,
@@ -120,7 +125,7 @@ export class AuthService {
 
     // 创建 session
     const session = await this.sessionService.create({
-      id: hash,
+      sessionToken: hash,
       user: {
         connect: {
           id: user.id,
@@ -161,8 +166,27 @@ export class AuthService {
     return { token: this.jwtService.sign(payload) };
   }
 
-  async getCaptcha() {
-    return '1234';
+  /**
+   * 获取验证码
+   * @param {String} identifier
+   * @returns
+   */
+  async getCaptcha(identifier: string) {
+    return this.prisma.verificationToken.create({
+      data: {
+        identifier,
+        token: randomStringGenerator(),
+        expiresAt: new Date(Date.now() + ms('5m')),
+      },
+    });
+  }
+
+  async emailRegister(dto: AuthEmailRegisterDto) {
+    // return this.userService.create({
+    //   name: dto.mobile,
+    //   mobile: dto.mobile,
+    //   password: dto.captcha,
+    // });
   }
 
   async mobileRegister(dto: AuthMobileRegisterDto) {
