@@ -20,6 +20,7 @@ import { MenuModule } from './menu/menu.module';
 import { ExcelModule } from './excel/excel.module';
 import { OssModule } from './oss/oss.module';
 import { DictionaryModule } from './dictionary/dictionary.module';
+import { VerificationModule } from './verification/verification.module';
 import authConfig from './config/auth-config';
 
 @Module({
@@ -57,6 +58,7 @@ import authConfig from './config/auth-config';
     ExcelModule,
     OssModule,
     DictionaryModule,
+    VerificationModule,
   ],
   controllers: [DepartmentController, JobController],
   providers: [PrismaService, FileService, DepartmentService, JobService],

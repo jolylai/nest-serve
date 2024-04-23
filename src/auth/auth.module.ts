@@ -8,11 +8,25 @@ import { JwtStrategy } from './strategies/jwt.strategy';
 import { LocalStrategy } from './strategies/local.strategy';
 import { SessionModule } from '@/session/session.module';
 import { JwtRefreshStrategy } from './strategies/jwt-refresh.strategy';
+import { VerificationModule } from '@/verification/verification.module';
+import { VerificationService } from '@/verification/verification.service';
 
 @Module({
-  imports: [UserModule, PassportModule, JwtModule.register({}), SessionModule],
+  imports: [
+    UserModule,
+    PassportModule,
+    JwtModule.register({}),
+    SessionModule,
+    VerificationModule,
+  ],
   controllers: [AuthController],
-  providers: [AuthService, LocalStrategy, JwtStrategy, JwtRefreshStrategy],
+  providers: [
+    AuthService,
+    VerificationService,
+    LocalStrategy,
+    JwtStrategy,
+    JwtRefreshStrategy,
+  ],
   exports: [AuthService],
 })
 export class AuthModule {}

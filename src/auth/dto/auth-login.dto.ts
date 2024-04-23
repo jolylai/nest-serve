@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsMobilePhone, IsNotEmpty } from 'class-validator';
+import { IsEmail, IsMobilePhone, IsNotEmpty, Length } from 'class-validator';
 
 export class AuthMobileLoginDto {
   @ApiProperty({ example: '18188888888' })
@@ -8,6 +8,7 @@ export class AuthMobileLoginDto {
   mobile: string;
 
   @ApiProperty({ example: '123456' })
+  @Length(6, 6)
   @IsNotEmpty()
   captcha: string;
 }

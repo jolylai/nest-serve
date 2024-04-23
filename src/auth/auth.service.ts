@@ -20,6 +20,7 @@ import {
 } from './dto/auth-register.dto';
 import { JwtPayloadType, JwtRefreshPayloadType } from './types/jwt.type';
 import { PrismaService } from '@/prisma/prisma.service';
+import { VerificationService } from '@/verification/verification.service';
 
 @Injectable()
 export class AuthService {
@@ -27,34 +28,36 @@ export class AuthService {
     private readonly prisma: PrismaService,
     private readonly userService: UserService,
     private readonly jwtService: JwtService,
-    private configService: ConfigService<AllConfigType>,
+    private readonly configService: ConfigService<AllConfigType>,
     private readonly sessionService: SessionService,
+    private readonly verificationService: VerificationService,
   ) {}
 
   async validateMobileLogin(mobileLoginDto: AuthMobileLoginDto) {
-    const user = await this.userService.findByMobile(mobileLoginDto.mobile);
+    const isValidCaptcha = await this.verificationService.verifyMobileCaptcha(
+      mobileLoginDto.mobile,
+      mobileLoginDto.captcha,
+    );
 
-    if (!user) {
+    if (!isValidCaptcha) {
       throw new UnprocessableEntityException({
         status: HttpStatus.UNPROCESSABLE_ENTITY,
         errors: {
-          mobile: '用户不存在',
+          password: '验证码错误',
         },
       });
     }
 
-    // 效验密码
-    const isValidPassword = await bcrypt.compare(
-      mobileLoginDto.captcha,
-      user.password,
-    );
+    this.verificationService.deleteMobileCaptcha(mobileLoginDto.mobile);
 
-    if (!isValidPassword) {
-      throw new UnprocessableEntityException({
-        status: HttpStatus.UNPROCESSABLE_ENTITY,
-        errors: {
-          password: '密码错误',
-        },
+    let user = await this.userService.findByMobile(mobileLoginDto.mobile);
+
+    if (!user) {
+      user = await this.userService.create({
+        name: mobileLoginDto.mobile,
+        mobile: mobileLoginDto.mobile,
+        // todo delete
+        password: mobileLoginDto.captcha,
       });
     }
 
@@ -84,10 +87,10 @@ export class AuthService {
     });
 
     return {
+      accessToken: token,
+      accessTokenExpiresAt: tokenExpires,
       refreshToken,
-      token,
-      tokenExpires,
-      user,
+      tokenType: 'bearer',
     };
   }
 
@@ -168,17 +171,12 @@ export class AuthService {
 
   /**
    * 获取验证码
-   * @param {String} identifier
+   * @param {String} mobile
    * @returns
    */
-  async getCaptcha(identifier: string) {
-    return this.prisma.verificationToken.create({
-      data: {
-        identifier,
-        token: randomStringGenerator(),
-        expiresAt: new Date(Date.now() + ms('5m')),
-      },
-    });
+  async getCaptcha(mobile: string) {
+    // todo 发送验证码
+    return this.verificationService.createMobileCaptcha(mobile);
   }
 
   async emailRegister(dto: AuthEmailRegisterDto) {
