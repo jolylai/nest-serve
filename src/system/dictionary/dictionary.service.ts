@@ -1,10 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from '@/prisma/prisma.service';
+import { QueryDictionaryItemDto } from './dictionary.dto';
 
 @Injectable()
 export class DictionaryService {
   constructor(private readonly prismaService: PrismaService) {}
+
+  async paginationItems(args: Prisma.DictionaryItemFindManyArgs) {
+    return this.prismaService.$transaction([
+      this.prismaService.dictionaryItem.findMany(args),
+      this.prismaService.dictionaryItem.count({ where: args.where }),
+    ]);
+  }
 
   async pagination(args: Prisma.DictionaryFindManyArgs) {
     return this.prismaService.$transaction([

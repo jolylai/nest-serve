@@ -1,6 +1,8 @@
-import { Allow, IsInt, IsString } from 'class-validator';
+import { Allow, IsBoolean, IsInt, IsOptional, IsString } from 'class-validator';
 
-export class DictionaryCreateDto {
+export class QueryDictionaryItemDto {}
+
+export class CreateDictionaryDto {
   @IsString()
   code: string;
 
@@ -8,10 +10,16 @@ export class DictionaryCreateDto {
   name: string;
 
   @IsInt()
+  @IsOptional()
   status: number;
 
+  @IsBoolean()
+  @IsOptional()
+  isSystem: boolean;
+
   @IsString()
-  remark: string;
+  @IsOptional()
+  description: string;
 }
 
 export class DictionaryQueryDto {

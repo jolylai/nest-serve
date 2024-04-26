@@ -19,7 +19,7 @@ import { JobModule } from './job/job.module';
 import { MenuModule } from './system/menu/menu.module';
 import { ExcelModule } from './excel/excel.module';
 import { OssModule } from './oss/oss.module';
-import { DictionaryModule } from './dictionary/dictionary.module';
+import { DictionaryModule } from './system/dictionary/dictionary.module';
 import { VerificationModule } from './verification/verification.module';
 import authConfig from './config/auth-config';
 

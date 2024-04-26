@@ -218,11 +218,14 @@ model Role {
 }
 
 model Dictionary {
-  id     Int    @id @default(autoincrement())
-  code   String @unique
-  name   String
-  status Int    @default(1) @db.TinyInt
-  remark String
+  id          Int     @id @default(autoincrement())
+  code        String  @unique
+  name        String
+  status      Int     @default(1) @db.TinyInt
+  description String?
+  isSystem    Boolean @default(false)
+
+  items DictionaryItem[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -231,14 +234,15 @@ model Dictionary {
 }
 
 model DictionaryItem {
-  id     Int    @id @default(autoincrement())
-  labal  String
-  value  String
-  order  Int
-  status Int    @db.TinyInt
-  remark String
+  id          Int     @id @default(autoincrement())
+  labal       String
+  value       String
+  sort        Int
+  status      Int     @db.TinyInt
+  description String?
 
-  code String
+  dictionary   Dictionary @relation(fields: [dictionaryId], references: [id])
+  dictionaryId Int
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
