@@ -16,7 +16,7 @@ import { DepartmentController } from './department/department.controller';
 import { JobController } from './job/job.controller';
 import { JobService } from './job/job.service';
 import { JobModule } from './job/job.module';
-import { MenuModule } from './menu/menu.module';
+import { MenuModule } from './system/menu/menu.module';
 import { ExcelModule } from './excel/excel.module';
 import { OssModule } from './oss/oss.module';
 import { DictionaryModule } from './dictionary/dictionary.module';

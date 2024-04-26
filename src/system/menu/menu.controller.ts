@@ -7,13 +7,27 @@ import {
   Patch,
   Post,
   Query,
+  UseGuards,
 } from '@nestjs/common';
-import { MenuCreateOrUpdateDto, MenuQueryDto } from './menu.dto';
+import { CreateMenuDto, MenuCreateOrUpdateDto, QueryMenuDto } from './menu.dto';
 import { MenuService } from './menu.service';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 
-@Controller('menu')
+@ApiBearerAuth()
+// @UseGuards(AuthGuard('jwt'))
+@ApiTags('Menu')
+@Controller({
+  path: 'system/menu',
+  version: '1',
+})
 export class MenuController {
   constructor(private readonly menuService: MenuService) {}
+
+  @Get('/tree')
+  async tree(@Query() query: QueryMenuDto) {
+    return this.menuService.findTree(query);
+  }
 
   @Get('/:id')
   async read(@Param('id') menuId: number) {
@@ -21,13 +35,13 @@ export class MenuController {
   }
 
   @Get()
-  async query(@Query() query: MenuQueryDto) {
+  async query(@Query() query: QueryMenuDto) {
     return this.menuService.findChildren(Object.assign({}, query));
   }
 
   @Post()
-  async create(@Body() data: MenuCreateOrUpdateDto) {
-    return this.menuService.upsert(data);
+  async create(@Body() data: CreateMenuDto) {
+    return this.menuService.create(data);
   }
 
   @Patch()

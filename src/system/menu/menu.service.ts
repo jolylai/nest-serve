@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from '@/prisma/prisma.service';
+import { CreateMenuDto, QueryMenuDto } from './menu.dto';
 
 @Injectable()
 export class MenuService {
@@ -13,8 +14,47 @@ export class MenuService {
     ]);
   }
 
-  async create(data: Prisma.MenuCreateInput) {
-    return this.prismaService.menu.create({ data });
+  async create({ parentId, ...data }: CreateMenuDto) {
+    if (parentId)
+      return this.prismaService.menu.create({
+        data: {
+          ...data,
+          parent: { connect: { id: parentId } },
+        },
+      });
+
+    return this.prismaService.menu.create({
+      data,
+    });
+  }
+
+  async findTree(queryMenuDto: QueryMenuDto) {
+    let menuTree = { children: [] };
+    // if(queryMenuDto)
+    //   menuTree = await this.prismaService.menu.findFirst({
+    // })
+
+    menuTree = await this.prismaService.menu.findFirst({
+      where: queryMenuDto ? queryMenuDto : { id: 0 },
+      include: {
+        children: {
+          include: {
+            children: {
+              include: { children: true },
+            }, // 递归查询子组织的子组织
+          },
+        },
+      },
+    });
+
+    return menuTree?.children ?? [];
+  }
+
+  async findSubTree(menuId: number | null) {
+    return this.prismaService.menu.findMany({
+      where: { id: menuId },
+      include: { children: true },
+    });
   }
 
   async findById(id: number) {

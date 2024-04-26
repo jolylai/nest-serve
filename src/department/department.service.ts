@@ -9,11 +9,16 @@ export class DepartmentService {
   constructor(private readonly prismaService: PrismaService) {}
 
   async create({ parentId, ...data }: CreateDepartmentDto) {
+    if (parentId)
+      return this.prismaService.department.create({
+        data: {
+          ...data,
+          parent: { connect: { id: parentId } },
+        },
+      });
+
     return this.prismaService.department.create({
-      data: {
-        ...data,
-        parent: { connect: { id: parentId } },
-      },
+      data,
     });
   }
 

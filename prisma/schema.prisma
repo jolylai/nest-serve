@@ -172,24 +172,28 @@ model Job {
 }
 
 model Menu {
-  id       Int    @id @default(autoincrement())
-  parentId Int?
-  type     Int    @db.TinyInt
-  name     String
-  order    Int
-  path     String
+  id         Int      @id @default(autoincrement())
+  title      String
+  name       String?
+  type       Int      @db.TinyInt // 1.目录 2.菜单 3.按钮
+  sort       Int      @db.TinyInt
+  path       String?
+  permission String?
+  icon       String?
+  isExternal Boolean?
+  isCache    Boolean?
+  isHidden   Boolean?
+  status     Int?     @db.TinyInt
+  redirect   String?
+  component  String?
+  disabled   Int?     @db.TinyInt
 
-  icon        String?
-  isLink      Int?     @map("is_link") @db.TinyInt
-  isCache     Int?     @map("is_cache") @db.TinyInt
-  visible     Int?     @db.TinyInt
-  status      Int?     @db.TinyInt
-  query       String?
-  permissions String?
-  ancestors   String
-  isLeaf      Boolean
-  createdAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @updatedAt @map("updated_at")
+  parentId Int?   @map("parent_id")
+  parent   Menu?  @relation("SubMenus", fields: [parentId], references: [id])
+  children Menu[] @relation("SubMenus")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("menu")
 }
