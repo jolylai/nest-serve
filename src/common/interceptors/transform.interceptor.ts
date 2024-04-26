@@ -27,7 +27,7 @@ export class TransformInterceptor<T>
         if (data instanceof StreamableFile) {
           return data;
         }
-        return { code: 0, message: 'success', data };
+        return { code: 200, message: 'success', data, success: true };
       }),
     );
   }

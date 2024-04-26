@@ -37,10 +37,11 @@ export class DepartmentService {
   }
 
   async findSubTree(id: number) {
-    return this.prismaService.department.findUnique({
+    const subTree = await this.prismaService.department.findUnique({
       where: { id },
       include: { children: true },
     });
+    return [subTree];
   }
 
   async update(deptId: number, data: Prisma.DepartmentUpdateInput) {

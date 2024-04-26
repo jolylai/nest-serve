@@ -24,7 +24,7 @@ export class AuthEmailLoginDto {
   password: string;
 }
 
-export class AuthPasswordLoginDto {
+export class AuthAccountLoginDto {
   @ApiProperty({ example: '+8618188888888' })
   @IsMobilePhone('zh-CN')
   @IsNotEmpty()

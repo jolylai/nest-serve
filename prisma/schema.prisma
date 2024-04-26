@@ -28,6 +28,7 @@ model User {
   avatar   String?
   email    String?
   gender   Int     @db.TinyInt() // 0: 未知 1: 男 2: 女
+  status   Int     @db.TinyInt() // 0: 禁用 1: 启用
   password String
 
   // deptId Int @map("dept_id")
@@ -62,6 +63,7 @@ model Account {
 
   @@unique([provider, providerAccountId])
   @@index([userId])
+  @@map("account")
 }
 
 model Session {
@@ -77,6 +79,7 @@ model Session {
   updatedAt DateTime @updatedAt
 
   @@index([userId])
+  @@map("session")
 }
 
 model VerificationToken {

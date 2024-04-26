@@ -13,7 +13,7 @@ import { randomStringGenerator } from '@nestjs/common/utils/random-string-genera
 import { ConfigService } from '@nestjs/config';
 import { AllConfigType } from '@/config/config.type';
 import { SessionService } from '@/session/session.service';
-import { AuthMobileLoginDto, AuthPasswordLoginDto } from './dto/auth-login.dto';
+import { AuthMobileLoginDto, AuthAccountLoginDto } from './dto/auth-login.dto';
 import {
   AuthEmailRegisterDto,
   AuthMobileRegisterDto,
@@ -59,6 +59,7 @@ export class AuthService {
         // todo delete
         password: mobileLoginDto.captcha,
         gender: 0,
+        status: 1,
       });
     }
 
@@ -95,7 +96,8 @@ export class AuthService {
     };
   }
 
-  async validatePasswordLogin(passwordLoginDto: AuthPasswordLoginDto) {
+  // 账号密码登录
+  async validateAccountLogin(passwordLoginDto: AuthAccountLoginDto) {
     const user = await this.userService.findByMobile(passwordLoginDto.mobile);
 
     if (!user) {
@@ -194,6 +196,7 @@ export class AuthService {
       mobile: dto.mobile,
       password: dto.captcha,
       gender: 0,
+      status: 1,
     });
   }
 
