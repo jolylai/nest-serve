@@ -41,7 +41,7 @@ export class UserService {
   async findMany(args: Prisma.UserFindManyArgs) {
     return this.prisma.user.findMany({
       ...args,
-      select: { id: true, name: true, createdAt: true, updatedAt: true },
+      // select: { id: true, name: true, createdAt: true, updatedAt: true },
     });
   }
 

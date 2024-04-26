@@ -22,13 +22,18 @@ model Area {
 }
 
 model User {
-  id       String    @id @default(cuid())
+  id       String  @id @default(cuid())
   name     String
-  mobile   String    @unique
+  mobile   String  @unique
+  avatar   String?
+  email    String?
+  gender   Int     @db.TinyInt() // 0: 未知 1: 男 2: 女
   password String
-  address  Address[]
-  session  Session[]
-  account  Account?
+
+  // deptId Int @map("dept_id")
+  address Address[]
+  session Session[]
+  account Account?
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -133,17 +138,19 @@ model Order {
 }
 
 model Department {
-  id         Int     @id @default(autoincrement())
-  parentId   Int     @map("parent_id")
-  ancestors  String?
-  name       String
-  order      Int
-  status     Int     @db.TinyInt
-  leaderId   Int?
-  lerderName String?
+  id        Int     @id @default(autoincrement())
+  name      String
+  sort      Int     @db.TinyInt
+  ancestors String?
+  status    Int     @db.TinyInt
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  parentId Int?         @map("parent_id")
+  parent   Department?  @relation("SubDepartments", fields: [parentId], references: [id])
+  children Department[] @relation("SubDepartments")
+
+  description String?
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
 
   @@map("department")
 }

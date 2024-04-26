@@ -2,13 +2,19 @@ import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 
 import { PrismaService } from '@/prisma/prisma.service';
+import { CreateDepartmentDto } from './department.dto';
 
 @Injectable()
 export class DepartmentService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async create(data: Prisma.DepartmentCreateInput) {
-    return this.prismaService.department.create({ data });
+  async create({ parentId, ...data }: CreateDepartmentDto) {
+    return this.prismaService.department.create({
+      data: {
+        ...data,
+        parent: { connect: { id: parentId } },
+      },
+    });
   }
 
   async pagination(args: Prisma.DepartmentFindManyArgs) {
@@ -18,9 +24,9 @@ export class DepartmentService {
     ]);
   }
 
-  async findById(jobId: number) {
+  async findById(deptId: number) {
     return this.prismaService.department.findUnique({
-      where: { id: jobId },
+      where: { id: deptId },
     });
   }
 
@@ -30,10 +36,23 @@ export class DepartmentService {
     });
   }
 
-  async update(jobId: number, data: Prisma.DepartmentUpdateInput) {
+  async findSubTree(id: number) {
+    return this.prismaService.department.findUnique({
+      where: { id },
+      include: { children: true },
+    });
+  }
+
+  async update(deptId: number, data: Prisma.DepartmentUpdateInput) {
     return this.prismaService.department.update({
-      where: { id: jobId },
+      where: { id: deptId },
       data,
+    });
+  }
+
+  async delete(deptId: number) {
+    return this.prismaService.department.delete({
+      where: { id: deptId },
     });
   }
 }

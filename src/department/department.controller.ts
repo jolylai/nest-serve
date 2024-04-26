@@ -1,21 +1,34 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
+  Header,
+  HttpCode,
+  HttpStatus,
   Param,
   Patch,
   Post,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { PaginationDto } from 'src/common/dtos/pagination.dto';
 import {
-  DepartmentCreateDto,
-  DepartmentUpdateDto,
+  CreateDepartmentDto,
   DepartmentQueryDto,
+  UpdateDepartmentDto,
 } from './department.dto';
 import { DepartmentService } from './department.service';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 
-@Controller('department')
+@ApiBearerAuth()
+// @UseGuards(AuthGuard('jwt'))
+@ApiTags('Department')
+@Controller({
+  path: 'department',
+  version: '1',
+})
 export class DepartmentController {
   constructor(private readonly departmentService: DepartmentService) {}
 
@@ -33,19 +46,42 @@ export class DepartmentController {
     return { list, total };
   }
 
+  @Get('/tree')
+  async tree() {
+    return this.departmentService.findSubTree(0);
+  }
+
+  @Get('/export')
+  @Header(
+    'Content-Type',
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8',
+  )
+  @Header('Content-Disposition', 'attachment; filename=department.xlsx')
+  async export() {
+    return this.departmentService.findSubTree(0);
+  }
+
   @Get('/:id')
   async read(@Param('id') id: number) {
     return this.departmentService.findById(id);
   }
 
   @Post()
-  async create(@Body() data: DepartmentCreateDto) {
-    return this.departmentService.create(data);
+  @HttpCode(HttpStatus.CREATED)
+  async create(@Body() createDepartmentDto: CreateDepartmentDto) {
+    return this.departmentService.create(createDepartmentDto);
   }
 
   @Patch()
-  async update(@Body() data: DepartmentUpdateDto) {
+  @HttpCode(HttpStatus.OK)
+  async update(@Body() data: UpdateDepartmentDto) {
     const { id, ...rest } = data;
     return this.departmentService.update(id, rest);
+  }
+
+  @Delete('/:id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async delete(@Param('id') deptId: number) {
+    return this.departmentService.delete(deptId);
   }
 }

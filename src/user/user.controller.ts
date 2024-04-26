@@ -42,7 +42,7 @@ export class UserController {
   }
 
   @Post()
-  create(@Body() userDto: CreateUserDto) {
-    return this.userService.create({ ...userDto, name: userDto.mobile });
+  create(@Body() createUserDto: CreateUserDto) {
+    return this.userService.create(createUserDto);
   }
 }

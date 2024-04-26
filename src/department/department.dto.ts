@@ -1,20 +1,29 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { IsIn, IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
-export class DepartmentCreateDto {
-  @IsNotEmpty()
+export class CreateDepartmentDto {
+  @ApiProperty({ example: 0 })
+  // @IsNotEmpty()
   @IsInt()
+  @IsOptional()
   parentId: number;
 
+  @ApiProperty({ example: '部门' })
   @IsNotEmpty()
   @IsString()
   name: string;
 
+  @ApiProperty({ example: 1 })
   @IsNotEmpty()
   @IsInt()
-  order: number;
+  sort: number;
 
+  @ApiProperty({ example: 1 })
   @IsIn([0, 1])
   status: number;
+
+  @IsOptional()
+  description: string;
 }
 
 export class DepartmentQueryDto {
@@ -27,7 +36,7 @@ export class DepartmentQueryDto {
   status: number;
 }
 
-export class DepartmentUpdateDto {
+export class UpdateDepartmentDto {
   @IsNotEmpty()
   @IsInt()
   id: number;

@@ -58,6 +58,7 @@ export class AuthService {
         mobile: mobileLoginDto.mobile,
         // todo delete
         password: mobileLoginDto.captcha,
+        gender: 0,
       });
     }
 
@@ -192,6 +193,7 @@ export class AuthService {
       name: dto.mobile,
       mobile: dto.mobile,
       password: dto.captcha,
+      gender: 0,
     });
   }
 
