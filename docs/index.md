@@ -11,7 +11,7 @@ hero:
   actions:
     - theme: brand
       text: Get Started
-      link: /nodejs/getting-start/
+      link: /guide/restful/
     - theme: alt
       text: View on GitHub
       link: https://github.com/vuejs/vitepress

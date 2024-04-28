@@ -7,9 +7,9 @@ export default defineConfig({
   themeConfig: {
     nav: [
       {
-        text: 'Nest.js',
-        link: '/nestjs/restful',
-        activeMatch: '^/nestjs/',
+        text: '指南',
+        link: '/guide/restful',
+        activeMatch: '^/guide/',
       },
       {
         text: 'Prisma',
@@ -18,18 +18,18 @@ export default defineConfig({
       },
     ],
     sidebar: {
-      '/nestjs/': getNestjsSidebar(),
+      '/guide/': getGuideSidebar(),
       '/prisma/': getPrismaSidebar(),
     },
   },
 });
 
-function getNestjsSidebar() {
+function getGuideSidebar() {
   return [
-    { text: '快速开始', items: [{ text: 'RestFul', link: '/nestjs/restful' }] },
+    { text: '快速开始', items: [{ text: 'RestFul', link: '/guide/restful' }] },
     {
       text: '安全',
-      items: [{ text: 'authentication', link: '/nestjs/authentication' }],
+      items: [{ text: 'authentication', link: '/guide/authentication' }],
     },
   ];
 }
