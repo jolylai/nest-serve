@@ -1,9 +1,7 @@
-import { BullModule } from '@nestjs/bull';
 import { Module } from '@nestjs/common';
 import { MulterModule } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { FileController } from './file.controller';
-import { FileProcessor } from './file.processor';
 import { FileService } from './file.service';
 import { createFileName, FileDestination } from './file.util';
 
@@ -20,11 +18,8 @@ import { createFileName, FileDestination } from './file.util';
         },
       }),
     }),
-    BullModule.registerQueue({
-      name: 'file',
-    }),
   ],
   controllers: [FileController],
-  providers: [FileService, FileProcessor],
+  providers: [FileService],
 })
 export class FileModule {}

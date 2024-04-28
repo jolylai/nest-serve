@@ -2,9 +2,9 @@ import { OnQueueActive, Process, Processor } from '@nestjs/bull';
 import { Logger } from '@nestjs/common';
 import { Job } from 'bull';
 
-@Processor('file')
-export class FileProcessor {
-  private readonly logger = new Logger(FileProcessor.name);
+@Processor('excel')
+export class ExcelProcessor {
+  private readonly logger = new Logger(ExcelProcessor.name);
 
   @OnQueueActive()
   onActive(job: Job) {
