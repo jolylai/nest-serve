@@ -8,34 +8,29 @@ export default defineConfig({
     nav: [
       {
         text: '指南',
-        link: '/guide/restful',
+        link: '/guide/index',
         activeMatch: '^/guide/',
-      },
-      {
-        text: 'Prisma',
-        link: '/prisma/crud',
-        activeMatch: '^/prisma/',
       },
     ],
     sidebar: {
       '/guide/': getGuideSidebar(),
-      '/prisma/': getPrismaSidebar(),
     },
   },
 });
 
 function getGuideSidebar() {
   return [
-    { text: '快速开始', items: [{ text: 'RestFul', link: '/guide/restful' }] },
+    {
+      text: '简介',
+      items: [
+        { text: '快速开始', link: '/guide/index' },
+        { text: 'RestFul', link: '/guide/restful' },
+      ],
+    },
     {
       text: '安全',
       items: [{ text: 'authentication', link: '/guide/authentication' }],
     },
-  ];
-}
-
-function getPrismaSidebar() {
-  return [
     {
       text: 'Prisma',
       items: [
